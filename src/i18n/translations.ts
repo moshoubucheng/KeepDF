@@ -237,6 +237,89 @@ const en = {
     pasteText: 'Paste or type text here to see word count...',
     importFile: 'Import .txt or .md file',
   },
+  faq: {
+    title: 'Frequently Asked Questions',
+    pdfMerge: [
+      { q: 'Is it safe to merge PDFs here?', a: 'Yes. All files are processed entirely in your browser. Nothing is uploaded to any server, so your documents stay completely private.' },
+      { q: 'How many PDF files can I merge at once?', a: 'There is no hard limit. You can merge as many PDFs as your browser memory allows. For very large batches, merging in groups may help performance.' },
+      { q: 'Will the merged PDF lose quality?', a: 'No. We combine the original PDF data directly without re-encoding, so text, images, and formatting remain unchanged.' },
+    ],
+    pdfSplit: [
+      { q: 'Can I split a PDF into specific page ranges?', a: 'Yes. You can split every page into separate files, enter custom ranges like 1-3 and 5-7, or extract individual pages.' },
+      { q: 'Does splitting a PDF reduce quality?', a: 'No. Splitting extracts the original pages without re-encoding, so quality is preserved exactly as in the source file.' },
+      { q: 'Is my PDF uploaded to a server for splitting?', a: 'No. All splitting is done locally in your browser. Your file never leaves your device.' },
+    ],
+    pdfCompress: [
+      { q: 'How does browser-based PDF compression work?', a: 'It optimizes the PDF structure and removes unnecessary metadata. Since it runs in the browser, embedded images are not re-compressed, so savings vary by file.' },
+      { q: 'Will compression affect the visual quality of my PDF?', a: 'No. The compression focuses on structure optimization and metadata removal, so visible content remains unchanged.' },
+      { q: 'Is there a file size limit for compression?', a: 'There is no fixed limit, but very large files may take longer to process depending on your device performance.' },
+    ],
+    pdfToImage: [
+      { q: 'What image formats can I convert PDF pages to?', a: 'You can convert PDF pages to PNG or JPG format. PNG offers lossless quality while JPG produces smaller files.' },
+      { q: 'Can I adjust the resolution of the output images?', a: 'Yes. You can choose a scale factor to control the resolution. Higher scale values produce larger, higher-resolution images.' },
+      { q: 'Are my PDF files uploaded during conversion?', a: 'No. The conversion uses your browser\'s rendering engine. Your files are never sent to any server.' },
+    ],
+    pdfWatermark: [
+      { q: 'Can I customize the watermark appearance?', a: 'Yes. You can set the text, font size, color, opacity, rotation angle, and position (center or diagonal).' },
+      { q: 'Will the watermark be applied to all pages?', a: 'Yes. The watermark is applied to every page of the PDF document.' },
+      { q: 'Can I remove a watermark after applying it?', a: 'The tool adds watermarks permanently. We recommend keeping your original file so you can re-apply with different settings if needed.' },
+    ],
+    pdfToWord: [
+      { q: 'Will the Word document preserve my PDF layout exactly?', a: 'The tool extracts text content from the PDF. Complex layouts, images, and special formatting may not be fully preserved.' },
+      { q: 'What Word format is generated?', a: 'The output is a .docx file compatible with Microsoft Word, Google Docs, and other word processors.' },
+      { q: 'Is my PDF uploaded to convert to Word?', a: 'No. All text extraction and conversion happens locally in your browser. Your document stays on your device.' },
+    ],
+    imageCompress: [
+      { q: 'How much can I reduce image file size?', a: 'Savings depend on the original image and quality setting. Typically you can reduce file size by 40-80% with minimal visible quality loss.' },
+      { q: 'Which image formats are supported for compression?', a: 'PNG, JPG, and WebP formats are supported. Each format is compressed using its optimal algorithm.' },
+      { q: 'Does compression affect image dimensions?', a: 'No. Compression only reduces file size by adjusting encoding quality. The image width and height remain the same.' },
+    ],
+    imageConvert: [
+      { q: 'Which image formats can I convert between?', a: 'You can convert between PNG, JPG, and WebP formats. All conversions are done instantly in your browser.' },
+      { q: 'Can I adjust quality when converting images?', a: 'Yes. For JPG and WebP output, you can set the quality level to balance file size and image quality.' },
+      { q: 'Will converting from PNG to JPG lose transparency?', a: 'Yes. JPG does not support transparency, so transparent areas will become white. Use PNG or WebP to keep transparency.' },
+    ],
+    imageResize: [
+      { q: 'Can I maintain the aspect ratio when resizing?', a: 'Yes. Aspect ratio locking is on by default. You can unlock it if you need to stretch or squish the image to specific dimensions.' },
+      { q: 'Are there preset sizes available?', a: 'Yes. Common presets are available for quick resizing. You can also enter custom width and height values.' },
+      { q: 'Does resizing affect image quality?', a: 'Enlarging images may reduce perceived quality. Reducing size generally maintains quality while producing smaller files.' },
+    ],
+    imageCrop: [
+      { q: 'Can I crop to a specific aspect ratio?', a: 'Yes. You can choose from preset aspect ratios like 1:1, 4:3, 16:9, or use freeform cropping for any shape.' },
+      { q: 'How do I select the crop area?', a: 'Simply drag on the image to create a selection box. You can adjust the corners and edges to fine-tune your crop area.' },
+      { q: 'Is the original image modified?', a: 'No. The original file is never changed. A new cropped image is created for you to download.' },
+    ],
+    imageStitch: [
+      { q: 'Can I join images both vertically and horizontally?', a: 'Yes. You can choose vertical (top-to-bottom) or horizontal (left-to-right) stitching direction.' },
+      { q: 'Can I add spacing between stitched images?', a: 'Yes. You can set pixel spacing between images and choose alignment (start, center, or end) for images of different sizes.' },
+      { q: 'How many images can I stitch together?', a: 'You need at least 2 images. There is no upper limit, though very large combinations may take longer to process.' },
+    ],
+    heicConvert: [
+      { q: 'What is HEIC format?', a: 'HEIC (High Efficiency Image Container) is the default photo format on iPhones and iPads. It offers great quality at small file sizes but is not widely supported outside Apple devices.' },
+      { q: 'Which formats can I convert HEIC to?', a: 'You can convert HEIC/HEIF photos to JPG or PNG format, which are universally supported across all platforms.' },
+      { q: 'Are my photos uploaded during conversion?', a: 'No. HEIC conversion is done entirely in your browser. Your photos never leave your device.' },
+    ],
+    imageToPdf: [
+      { q: 'Can I combine multiple images into one PDF?', a: 'Yes. You can add multiple images and they will be placed on separate pages in a single PDF document.' },
+      { q: 'Can I choose the page size and orientation?', a: 'Yes. You can select common page sizes like A4 or Letter, and choose between portrait and landscape orientation.' },
+      { q: 'Will my images be compressed in the PDF?', a: 'Images are embedded at their original quality. You can choose fit mode to maintain aspect ratio or fill the entire page.' },
+    ],
+    mdEditor: [
+      { q: 'What is Markdown?', a: 'Markdown is a lightweight text formatting language. You can add headings, bold, italic, links, lists, and more using simple symbols.' },
+      { q: 'Can I preview my Markdown in real time?', a: 'Yes. The editor offers edit, split, and preview modes. Split mode shows your Markdown source and rendered preview side by side.' },
+      { q: 'Can I import and export Markdown files?', a: 'Yes. You can import existing .md files and export your work as a .md file at any time.' },
+    ],
+    mdToPdf: [
+      { q: 'Can I customize the PDF page size and margins?', a: 'Yes. You can choose page sizes like A4 or Letter, and set margins to normal, narrow, or wide.' },
+      { q: 'Does the PDF preserve Markdown formatting?', a: 'Yes. Headings, bold, italic, lists, code blocks, links, and other Markdown elements are rendered in the PDF.' },
+      { q: 'Is any external service used for the conversion?', a: 'No. The Markdown is rendered to HTML and converted to PDF entirely in your browser using a local library.' },
+    ],
+    wordCount: [
+      { q: 'What statistics does the word counter provide?', a: 'It counts characters, characters without spaces, words, sentences, and paragraphs. It also estimates reading time.' },
+      { q: 'Can I import a text file for counting?', a: 'Yes. You can import .txt or .md files, or simply paste or type text directly into the editor.' },
+      { q: 'Does it work with non-English text?', a: 'Yes. The counter handles multilingual text including CJK (Chinese, Japanese, Korean) characters correctly.' },
+    ],
+  },
 };
 
 const ja: typeof en = {
@@ -476,6 +559,89 @@ const ja: typeof en = {
     pasteText: 'ここにテキストを貼り付けまたは入力すると文字数が表示されます...',
     importFile: '.txtまたは.mdファイルをインポート',
   },
+  faq: {
+    title: 'よくある質問',
+    pdfMerge: [
+      { q: 'ここでPDFを結合しても安全ですか？', a: 'はい。すべてのファイルはブラウザ内で処理されます。サーバーにアップロードされることはないため、ドキュメントは完全にプライベートです。' },
+      { q: '一度に何個のPDFファイルを結合できますか？', a: '厳密な上限はありません。ブラウザのメモリが許す限り結合できます。非常に大量のファイルの場合、グループに分けて結合するとパフォーマンスが向上します。' },
+      { q: '結合したPDFの品質は劣化しますか？', a: 'いいえ。元のPDFデータを直接結合するため、テキスト、画像、フォーマットはそのまま維持されます。' },
+    ],
+    pdfSplit: [
+      { q: 'PDFを特定のページ範囲で分割できますか？', a: 'はい。全ページを個別ファイルに分割、1-3や5-7のようなカスタム範囲の指定、個別ページの抽出が可能です。' },
+      { q: 'PDF分割で品質は劣化しますか？', a: 'いいえ。元のページを再エンコードせずに抽出するため、ソースファイルと同じ品質が保たれます。' },
+      { q: '分割時にPDFはサーバーにアップロードされますか？', a: 'いいえ。すべての分割処理はブラウザ内でローカルに行われます。ファイルがデバイスから外に出ることはありません。' },
+    ],
+    pdfCompress: [
+      { q: 'ブラウザベースのPDF圧縮はどのように機能しますか？', a: 'PDF構造の最適化と不要なメタデータの削除を行います。ブラウザ内で実行されるため、埋め込み画像の再圧縮は行われず、削減効果はファイルにより異なります。' },
+      { q: '圧縮でPDFの見た目の品質は変わりますか？', a: 'いいえ。構造最適化とメタデータ削除に焦点を当てているため、表示されるコンテンツは変更されません。' },
+      { q: '圧縮にファイルサイズの制限はありますか？', a: '固定の制限はありませんが、非常に大きなファイルはデバイスの性能に応じて処理に時間がかかる場合があります。' },
+    ],
+    pdfToImage: [
+      { q: 'PDFページをどの画像形式に変換できますか？', a: 'PDFページをPNGまたはJPG形式に変換できます。PNGはロスレス品質、JPGはより小さいファイルサイズを提供します。' },
+      { q: '出力画像の解像度を調整できますか？', a: 'はい。スケール倍率を選択して解像度を制御できます。高いスケール値でより大きく高解像度の画像が生成されます。' },
+      { q: '変換中にPDFファイルはアップロードされますか？', a: 'いいえ。変換はブラウザのレンダリングエンジンを使用します。ファイルがサーバーに送信されることはありません。' },
+    ],
+    pdfWatermark: [
+      { q: '透かしの外観をカスタマイズできますか？', a: 'はい。テキスト、フォントサイズ、色、不透明度、回転角度、位置（中央または対角線）を設定できます。' },
+      { q: '透かしはすべてのページに適用されますか？', a: 'はい。透かしはPDFドキュメントのすべてのページに適用されます。' },
+      { q: '適用後に透かしを削除できますか？', a: '透かしは恒久的に追加されます。異なる設定で再適用する場合に備えて、元のファイルを保存しておくことをお勧めします。' },
+    ],
+    pdfToWord: [
+      { q: 'Word文書はPDFのレイアウトを完全に再現しますか？', a: 'PDFからテキスト内容を抽出します。複雑なレイアウト、画像、特殊なフォーマットは完全に保持されない場合があります。' },
+      { q: 'どのWord形式が生成されますか？', a: 'Microsoft Word、Google Docs、その他のワープロソフトと互換性のある.docxファイルが出力されます。' },
+      { q: 'Word変換時にPDFはアップロードされますか？', a: 'いいえ。テキスト抽出と変換はすべてブラウザ内でローカルに行われます。ドキュメントはデバイス上に留まります。' },
+    ],
+    imageCompress: [
+      { q: '画像ファイルサイズをどの程度削減できますか？', a: '削減率は元の画像と品質設定によります。通常、視覚的な品質をほぼ損なわずに40〜80%のファイルサイズ削減が可能です。' },
+      { q: '圧縮に対応している画像形式は？', a: 'PNG、JPG、WebP形式に対応しています。各形式は最適なアルゴリズムで圧縮されます。' },
+      { q: '圧縮で画像の寸法は変わりますか？', a: 'いいえ。圧縮はエンコード品質の調整によりファイルサイズのみを削減します。画像の幅と高さは変わりません。' },
+    ],
+    imageConvert: [
+      { q: 'どの画像形式間で変換できますか？', a: 'PNG、JPG、WebP形式間で変換できます。すべての変換はブラウザ内で即座に行われます。' },
+      { q: '画像変換時に品質を調整できますか？', a: 'はい。JPGおよびWebP出力の場合、品質レベルを設定してファイルサイズと画質のバランスを調整できます。' },
+      { q: 'PNGからJPGに変換すると透明部分はどうなりますか？', a: 'JPGは透明度をサポートしていないため、透明な領域は白くなります。透明度を維持するにはPNGまたはWebPを使用してください。' },
+    ],
+    imageResize: [
+      { q: 'リサイズ時にアスペクト比を維持できますか？', a: 'はい。アスペクト比のロックはデフォルトでオンです。特定の寸法に引き伸ばす必要がある場合はロックを解除できます。' },
+      { q: 'プリセットサイズはありますか？', a: 'はい。素早くリサイズするための一般的なプリセットが用意されています。カスタムの幅と高さの値も入力できます。' },
+      { q: 'リサイズは画像品質に影響しますか？', a: '画像を拡大すると知覚品質が低下する場合があります。縮小は一般的に品質を維持しながらファイルサイズが小さくなります。' },
+    ],
+    imageCrop: [
+      { q: '特定のアスペクト比で切り抜きできますか？', a: 'はい。1:1、4:3、16:9などのプリセットアスペクト比から選択するか、フリーフォームで任意の形状に切り抜きできます。' },
+      { q: '切り抜き範囲はどのように選択しますか？', a: '画像上でドラッグして選択ボックスを作成します。角や辺を調整して切り抜き範囲を微調整できます。' },
+      { q: '元の画像は変更されますか？', a: 'いいえ。元のファイルは変更されません。新しい切り抜き済み画像がダウンロード用に作成されます。' },
+    ],
+    imageStitch: [
+      { q: '画像を縦にも横にも結合できますか？', a: 'はい。縦方向（上から下）または横方向（左から右）の結合方向を選択できます。' },
+      { q: '結合した画像間にスペースを追加できますか？', a: 'はい。画像間のピクセルスペースを設定し、サイズの異なる画像の配置（先頭、中央、末尾）を選択できます。' },
+      { q: '何枚の画像を結合できますか？', a: '最低2枚の画像が必要です。上限はありませんが、非常に大量の組み合わせの場合、処理に時間がかかることがあります。' },
+    ],
+    heicConvert: [
+      { q: 'HEIC形式とは何ですか？', a: 'HEIC（High Efficiency Image Container）はiPhoneやiPadのデフォルトの写真形式です。小さなファイルサイズで高品質を提供しますが、Apple以外のデバイスでは広くサポートされていません。' },
+      { q: 'HEICをどの形式に変換できますか？', a: 'HEIC/HEIF写真をJPGまたはPNG形式に変換できます。これらはすべてのプラットフォームで広くサポートされています。' },
+      { q: '変換中に写真はアップロードされますか？', a: 'いいえ。HEIC変換はブラウザ内で完全に行われます。写真がデバイスから外に出ることはありません。' },
+    ],
+    imageToPdf: [
+      { q: '複数の画像を1つのPDFにまとめられますか？', a: 'はい。複数の画像を追加でき、1つのPDFドキュメントの各ページに配置されます。' },
+      { q: 'ページサイズと向きを選択できますか？', a: 'はい。A4やLetterなどの一般的なページサイズを選択し、縦向きと横向きを選べます。' },
+      { q: 'PDF内で画像は圧縮されますか？', a: '画像は元の品質で埋め込まれます。フィットモードでアスペクト比を維持するか、ページ全体を埋めるかを選択できます。' },
+    ],
+    mdEditor: [
+      { q: 'Markdownとは何ですか？', a: 'Markdownは軽量なテキストフォーマット言語です。見出し、太字、斜体、リンク、リストなどを簡単な記号で追加できます。' },
+      { q: 'Markdownをリアルタイムでプレビューできますか？', a: 'はい。編集、分割、プレビューモードがあります。分割モードではMarkdownソースとレンダリングされたプレビューを並べて表示します。' },
+      { q: 'Markdownファイルをインポート・エクスポートできますか？', a: 'はい。既存の.mdファイルをインポートし、作業をいつでも.mdファイルとしてエクスポートできます。' },
+    ],
+    mdToPdf: [
+      { q: 'PDFのページサイズと余白をカスタマイズできますか？', a: 'はい。A4やLetterなどのページサイズを選択し、余白を標準、狭い、広いに設定できます。' },
+      { q: 'PDFはMarkdownのフォーマットを保持しますか？', a: 'はい。見出し、太字、斜体、リスト、コードブロック、リンクなどのMarkdown要素がPDFにレンダリングされます。' },
+      { q: '変換に外部サービスは使用されますか？', a: 'いいえ。MarkdownはHTMLにレンダリングされ、ローカルライブラリを使用してブラウザ内でPDFに変換されます。' },
+    ],
+    wordCount: [
+      { q: 'どのような統計情報が表示されますか？', a: '文字数、スペースなしの文字数、単語数、文数、段落数をカウントします。読了時間の推定も行います。' },
+      { q: 'テキストファイルをインポートしてカウントできますか？', a: 'はい。.txtまたは.mdファイルをインポートするか、テキストを直接貼り付けまたは入力できます。' },
+      { q: '英語以外のテキストにも対応していますか？', a: 'はい。CJK（中国語、日本語、韓国語）を含む多言語テキストを正しく処理します。' },
+    ],
+  },
 };
 
 const zh: typeof en = {
@@ -714,6 +880,89 @@ const zh: typeof en = {
     seconds: '秒',
     pasteText: '在此粘贴或输入文本以查看字数统计...',
     importFile: '导入 .txt 或 .md 文件',
+  },
+  faq: {
+    title: '常见问题',
+    pdfMerge: [
+      { q: '在这里合并PDF安全吗？', a: '安全。所有文件完全在您的浏览器中处理，不会上传到任何服务器，您的文档完全保密。' },
+      { q: '一次可以合并多少个PDF文件？', a: '没有硬性限制。只要浏览器内存允许，您可以合并任意数量的PDF。对于大量文件，分组合并可提升性能。' },
+      { q: '合并后的PDF会损失质量吗？', a: '不会。我们直接合并原始PDF数据，不进行重新编码，因此文本、图片和格式保持不变。' },
+    ],
+    pdfSplit: [
+      { q: '可以按特定页面范围拆分PDF吗？', a: '可以。您可以将每页拆分为单独文件、输入自定义范围如1-3和5-7，或提取单个页面。' },
+      { q: '拆分PDF会降低质量吗？', a: '不会。拆分是从原始页面中提取，不进行重新编码，因此质量与源文件完全一致。' },
+      { q: '拆分时PDF会上传到服务器吗？', a: '不会。所有拆分处理都在浏览器中本地完成，文件从不离开您的设备。' },
+    ],
+    pdfCompress: [
+      { q: '浏览器端PDF压缩是如何工作的？', a: '通过优化PDF结构和删除不必要的元数据来压缩。由于在浏览器中运行，不会重新压缩嵌入的图片，因此压缩效果因文件而异。' },
+      { q: '压缩会影响PDF的视觉质量吗？', a: '不会。压缩专注于结构优化和元数据删除，可见内容保持不变。' },
+      { q: '压缩有文件大小限制吗？', a: '没有固定限制，但非常大的文件可能根据设备性能需要更长的处理时间。' },
+    ],
+    pdfToImage: [
+      { q: 'PDF页面可以转换为哪些图片格式？', a: '可以将PDF页面转换为PNG或JPG格式。PNG提供无损质量，JPG生成更小的文件。' },
+      { q: '可以调整输出图片的分辨率吗？', a: '可以。您可以选择缩放倍数来控制分辨率。较高的缩放值会生成更大、更高分辨率的图片。' },
+      { q: '转换过程中PDF文件会被上传吗？', a: '不会。转换使用浏览器的渲染引擎，文件从不发送到任何服务器。' },
+    ],
+    pdfWatermark: [
+      { q: '可以自定义水印外观吗？', a: '可以。您可以设置文本、字号、颜色、透明度、旋转角度和位置（居中或对角线）。' },
+      { q: '水印会应用到所有页面吗？', a: '是的。水印会应用到PDF文档的每一页。' },
+      { q: '添加水印后可以删除吗？', a: '水印是永久添加的。建议保留原始文件，以便需要时使用不同设置重新添加。' },
+    ],
+    pdfToWord: [
+      { q: 'Word文档会完全保留PDF的布局吗？', a: '工具会提取PDF中的文本内容。复杂布局、图片和特殊格式可能无法完全保留。' },
+      { q: '生成的是什么Word格式？', a: '输出为.docx文件，兼容Microsoft Word、Google Docs等文字处理软件。' },
+      { q: '转换为Word时PDF会被上传吗？', a: '不会。所有文本提取和转换都在浏览器中本地完成，文档始终留在您的设备上。' },
+    ],
+    imageCompress: [
+      { q: '图片文件大小可以减少多少？', a: '压缩效果取决于原始图片和质量设置。通常可以在几乎不影响视觉质量的情况下减少40-80%的文件大小。' },
+      { q: '支持哪些图片格式的压缩？', a: '支持PNG、JPG和WebP格式。每种格式使用其最优算法进行压缩。' },
+      { q: '压缩会改变图片尺寸吗？', a: '不会。压缩仅通过调整编码质量来减小文件大小，图片的宽度和高度保持不变。' },
+    ],
+    imageConvert: [
+      { q: '可以在哪些图片格式之间转换？', a: '可以在PNG、JPG和WebP格式之间转换。所有转换都在浏览器中即时完成。' },
+      { q: '转换图片时可以调整质量吗？', a: '可以。对于JPG和WebP输出，您可以设置质量级别以平衡文件大小和图片质量。' },
+      { q: '从PNG转换为JPG会丢失透明度吗？', a: '是的。JPG不支持透明度，透明区域会变为白色。要保留透明度，请使用PNG或WebP。' },
+    ],
+    imageResize: [
+      { q: '调整大小时可以保持宽高比吗？', a: '可以。宽高比锁定默认开启。如需拉伸到特定尺寸，可以解锁宽高比。' },
+      { q: '有预设尺寸可用吗？', a: '有。提供了常用预设以快速调整大小。您也可以输入自定义的宽度和高度值。' },
+      { q: '调整大小会影响图片质量吗？', a: '放大图片可能降低感知质量。缩小通常在保持质量的同时生成更小的文件。' },
+    ],
+    imageCrop: [
+      { q: '可以按特定宽高比裁剪吗？', a: '可以。您可以选择1:1、4:3、16:9等预设宽高比，或使用自由裁剪选择任意形状。' },
+      { q: '如何选择裁剪区域？', a: '在图片上拖动即可创建选择框。您可以调整角和边来微调裁剪区域。' },
+      { q: '原始图片会被修改吗？', a: '不会。原始文件不会被更改。系统会创建新的裁剪图片供您下载。' },
+    ],
+    imageStitch: [
+      { q: '可以垂直和水平拼接图片吗？', a: '可以。您可以选择垂直（从上到下）或水平（从左到右）拼接方向。' },
+      { q: '可以在拼接的图片之间添加间距吗？', a: '可以。您可以设置图片间的像素间距，并为不同大小的图片选择对齐方式（靠前、居中或靠后）。' },
+      { q: '可以拼接多少张图片？', a: '至少需要2张图片，没有上限，但非常大量的组合可能需要更长的处理时间。' },
+    ],
+    heicConvert: [
+      { q: '什么是HEIC格式？', a: 'HEIC（高效图像容器）是iPhone和iPad的默认照片格式。它以小文件大小提供出色的质量，但在苹果设备之外不被广泛支持。' },
+      { q: 'HEIC可以转换为哪些格式？', a: '可以将HEIC/HEIF照片转换为JPG或PNG格式，这些格式在所有平台上都被广泛支持。' },
+      { q: '转换过程中照片会被上传吗？', a: '不会。HEIC转换完全在浏览器中完成，您的照片从不离开设备。' },
+    ],
+    imageToPdf: [
+      { q: '可以将多张图片合并为一个PDF吗？', a: '可以。您可以添加多张图片，它们将被放置在单个PDF文档的各个页面上。' },
+      { q: '可以选择页面大小和方向吗？', a: '可以。您可以选择A4或Letter等常用页面大小，以及纵向或横向方向。' },
+      { q: 'PDF中的图片会被压缩吗？', a: '图片以原始质量嵌入。您可以选择适应模式来保持宽高比或填充整个页面。' },
+    ],
+    mdEditor: [
+      { q: '什么是Markdown？', a: 'Markdown是一种轻量级文本格式语言。您可以使用简单的符号添加标题、粗体、斜体、链接、列表等。' },
+      { q: '可以实时预览Markdown吗？', a: '可以。编辑器提供编辑、分栏和预览模式。分栏模式可并排显示Markdown源码和渲染预览。' },
+      { q: '可以导入和导出Markdown文件吗？', a: '可以。您可以导入现有的.md文件，并随时将工作导出为.md文件。' },
+    ],
+    mdToPdf: [
+      { q: '可以自定义PDF的页面大小和页边距吗？', a: '可以。您可以选择A4或Letter等页面大小，并将页边距设置为标准、窄或宽。' },
+      { q: 'PDF会保留Markdown的格式吗？', a: '会。标题、粗体、斜体、列表、代码块、链接等Markdown元素都会渲染到PDF中。' },
+      { q: '转换时使用了外部服务吗？', a: '没有。Markdown先渲染为HTML，然后使用本地库在浏览器中转换为PDF。' },
+    ],
+    wordCount: [
+      { q: '字数统计提供哪些数据？', a: '统计字符数、不含空格的字符数、字数、句子数和段落数，还会估算阅读时间。' },
+      { q: '可以导入文本文件进行统计吗？', a: '可以。您可以导入.txt或.md文件，也可以直接粘贴或输入文本。' },
+      { q: '支持非英文文本吗？', a: '支持。可正确处理包括CJK（中文、日文、韩文）在内的多语言文本。' },
+    ],
   },
 };
 

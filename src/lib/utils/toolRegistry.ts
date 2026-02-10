@@ -78,3 +78,7 @@ export function getToolsByCategory(locale: Locale, category: ToolCategory) {
 export function getCategoryMeta(locale: Locale, category: ToolCategory) {
   return getLocalizedCategories(locale).find((c) => c.id === category);
 }
+
+export function getToolDefByPath(category: string, slug: string): ToolDef | undefined {
+  return toolDefs.find((t) => t.path === `/${category}/${slug}`);
+}

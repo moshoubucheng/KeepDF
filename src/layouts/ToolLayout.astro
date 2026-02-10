@@ -4,7 +4,7 @@ import PrivacyBadge from '@components/layout/PrivacyBadge.astro';
 import type { ToolCategory } from '@types/tool';
 import type { Locale } from '../i18n/locales';
 import { localePath } from '../i18n/locales';
-import { getCategoryMeta } from '@lib/utils/toolRegistry';
+import { getCategoryMeta, getToolDefByPath } from '@lib/utils/toolRegistry';
 import { t } from '../i18n/utils';
 
 interface Props {
@@ -33,15 +33,6 @@ const breadcrumbList: Record<string, unknown> = {
   ],
 };
 
-// Wrap incoming jsonLd (WebApplication) in @graph with BreadcrumbList
-const enhancedJsonLd = jsonLd ? {
-  '@context': 'https://schema.org',
-  '@graph': [
-    Object.fromEntries(Object.entries(jsonLd).filter(([k]) => k !== '@context')),
-    breadcrumbList,
-  ],
-} : undefined;
-
 // Auto-compute OG image path
 // Tool pages: /pdf/merge (en), /ja/pdf/merge (ja), /zh/image/compress (zh)
 // OG images: /og/{locale}/{category}-{slug}.png
@@ -50,6 +41,35 @@ const isLocalePrefixed = pathParts.length >= 3;
 const toolCategory = isLocalePrefixed ? pathParts[1] : pathParts[0];
 const toolSlug = isLocalePrefixed ? pathParts[2] : pathParts[1];
 const ogImage = `${siteOrigin}/og/${lang}/${toolCategory}-${toolSlug}.png`;
+
+// Auto-lookup FAQ by tool path
+const tr = t(lang);
+const toolDef = getToolDefByPath(toolCategory, toolSlug);
+const faqKey = toolDef?.translationKey as keyof typeof tr.faq | undefined;
+const faqItems = faqKey && faqKey !== 'title' ? tr.faq[faqKey] : undefined;
+const faqArray = Array.isArray(faqItems) ? faqItems as { q: string; a: string }[] : [];
+
+// Build FAQPage schema
+const faqPageSchema = faqArray.length > 0 ? {
+  '@type': 'FAQPage',
+  mainEntity: faqArray.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+} : null;
+
+// Wrap incoming jsonLd (WebApplication) in @graph with BreadcrumbList + FAQPage
+const graphItems = [
+  ...(jsonLd ? [Object.fromEntries(Object.entries(jsonLd).filter(([k]) => k !== '@context'))] : []),
+  breadcrumbList,
+  ...(faqPageSchema ? [faqPageSchema] : []),
+];
+
+const enhancedJsonLd = graphItems.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@graph': graphItems,
+} : undefined;
 ---
 
 <BaseLayout title={title} description={description} lang={lang} ogImage={ogImage}>
@@ -81,5 +101,22 @@ const ogImage = `${siteOrigin}/og/${lang}/${toolCategory}-${toolSlug}.png`;
 
     <!-- Tool content (React island slot) -->
     <slot />
+
+    <!-- FAQ section -->
+    {faqArray.length > 0 && (
+      <section class="mt-12 border-t border-border pt-8">
+        <h2 class="mb-4 text-xl font-semibold text-fg">{tr.faq.title}</h2>
+        <div class="space-y-3">
+          {faqArray.map((item) => (
+            <details class="group rounded-lg border border-border bg-surface">
+              <summary class="cursor-pointer select-none px-4 py-3 font-medium text-fg hover:bg-surface-hover">
+                {item.q}
+              </summary>
+              <p class="px-4 pb-4 text-fg-muted">{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 </BaseLayout>
