@@ -1,0 +1,48 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ToolCard from '@components/shared/ToolCard';
+import { getToolsByCategory, getCategoryMeta } from '@lib/utils/toolRegistry';
+import type { Locale } from '../../../i18n/locales';
+import { localePath } from '../../../i18n/locales';
+import { t } from '../../../i18n/utils';
+
+const lang: Locale = 'zh';
+const tr = t(lang);
+const category = getCategoryMeta(lang, 'doc')!;
+const tools = getToolsByCategory(lang, 'doc');
+---
+
+<BaseLayout title={`${category.name} - ${tr.site.name}`} description={category.description} lang={lang}>
+  <div class="mx-auto max-w-4xl px-4 py-10">
+    <!-- Breadcrumb -->
+    <nav class="mb-6 text-sm text-fg-muted" aria-label="Breadcrumb">
+      <ol class="flex items-center gap-1.5">
+        <li><a href={localePath('/', lang)} class="hover:text-brand-600">{tr.breadcrumb.home}</a></li>
+        <li>/</li>
+        <li class="font-medium text-fg">{category.name}</li>
+      </ol>
+    </nav>
+
+    <!-- Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl font-bold text-fg">
+        <span class="mr-2">{category.icon}</span>{category.name}
+      </h1>
+      <p class="mt-2 text-base text-fg-muted">
+        {category.description}
+      </p>
+    </div>
+
+    <!-- Tool grid -->
+    <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
+      {tools.map((tool) => (
+        <ToolCard
+          name={tool.name}
+          description={tool.description}
+          icon={tool.icon}
+          href={tool.path}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

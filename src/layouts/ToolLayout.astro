@@ -1,0 +1,55 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import PrivacyBadge from '@components/layout/PrivacyBadge.astro';
+import type { ToolCategory } from '@types/tool';
+import type { Locale } from '../i18n/locales';
+import { localePath } from '../i18n/locales';
+import { getCategoryMeta } from '@lib/utils/toolRegistry';
+import { t } from '../i18n/utils';
+
+interface Props {
+  title: string;
+  toolName: string;
+  description?: string;
+  category: ToolCategory;
+  jsonLd?: Record<string, unknown>;
+  lang: Locale;
+}
+
+const { title, toolName, description, category, jsonLd, lang } = Astro.props;
+const cat = getCategoryMeta(lang, category);
+const homeHref = localePath('/', lang);
+const homeLabel = t(lang).breadcrumb.home;
+---
+
+<BaseLayout title={title} description={description} lang={lang}>
+  {jsonLd && (
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
+  )}
+
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <!-- Breadcrumb -->
+    <nav class="mb-6 text-sm text-fg-muted" aria-label="Breadcrumb">
+      <ol class="flex items-center gap-1.5">
+        <li><a href={homeHref} class="hover:text-brand-600">{homeLabel}</a></li>
+        <li>/</li>
+        {cat && (
+          <>
+            <li><a href={cat.path} class="hover:text-brand-600">{cat.name}</a></li>
+            <li>/</li>
+          </>
+        )}
+        <li class="text-fg font-medium">{toolName}</li>
+      </ol>
+    </nav>
+
+    <!-- Tool header -->
+    <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <h1 class="text-2xl font-bold text-fg">{toolName}</h1>
+      <PrivacyBadge lang={lang} />
+    </div>
+
+    <!-- Tool content (React island slot) -->
+    <slot />
+  </div>
+</BaseLayout>

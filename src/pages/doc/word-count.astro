@@ -1,0 +1,34 @@
+---
+import ToolLayout from '@layouts/ToolLayout.astro';
+import WordCount from '@components/doc/WordCount';
+import type { Locale } from '../../i18n/locales';
+import { t } from '../../i18n/utils';
+
+const lang: Locale = 'en';
+const tr = t(lang);
+const toolTr = tr.tools.wordCount;
+const title = `${toolTr.name} - ${tr.site.name}`;
+const description = toolTr.description;
+const uiStrings = { common: tr.common, wordCount: tr.wordCount };
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: toolTr.name,
+  description: toolTr.description,
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+  inLanguage: lang,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+---
+
+<ToolLayout
+  title={title}
+  toolName={toolTr.name}
+  description={description}
+  category="doc"
+  jsonLd={jsonLd}
+  lang={lang}
+>
+  <WordCount client:only="react" translations={uiStrings} />
+</ToolLayout>

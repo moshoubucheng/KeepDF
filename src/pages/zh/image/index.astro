@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import ToolCard from '@components/shared/ToolCard';
+import { getToolsByCategory, getCategoryMeta } from '@lib/utils/toolRegistry';
+import type { Locale } from '../../../i18n/locales';
+import { t } from '../../../i18n/utils';
+
+const lang: Locale = 'zh';
+const tr = t(lang);
+const category = getCategoryMeta(lang, 'image')!;
+const imageTools = getToolsByCategory(lang, 'image');
+const title = `${category.name} - ${tr.site.name}`;
+---
+
+<BaseLayout title={title} description={category.description} lang={lang}>
+  <div class="mx-auto max-w-4xl px-4 py-8">
+    <h1 class="text-2xl font-bold text-fg">{category.name}</h1>
+    <p class="mt-2 text-fg-sec">
+      {category.description}
+    </p>
+
+    <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-3">
+      {imageTools.map((tool) => (
+        <ToolCard
+          name={tool.name}
+          description={tool.description}
+          icon={tool.icon}
+          href={tool.path}
+        />
+      ))}
+    </div>
+  </div>
+</BaseLayout>

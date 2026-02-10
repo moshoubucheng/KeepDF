@@ -2,11 +2,11 @@
 import BaseLayout from '@layouts/BaseLayout.astro';
 import PrivacyBadge from '@components/layout/PrivacyBadge.astro';
 import { getLocalizedCategories, getToolsByCategory } from '@lib/utils/toolRegistry';
-import type { Locale } from '../i18n/locales';
-import { t } from '../i18n/utils';
-import { localePath } from '../i18n/locales';
+import type { Locale } from '../../i18n/locales';
+import { t } from '../../i18n/utils';
+import { localePath } from '../../i18n/locales';
 
-const lang: Locale = 'en';
+const lang: Locale = 'zh';
 const tr = t(lang);
 const localizedCategories = getLocalizedCategories(lang);
 ---

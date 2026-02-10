@@ -1,0 +1,35 @@
+---
+import ToolLayout from '@layouts/ToolLayout.astro';
+import SplitPdf from '@components/pdf/SplitPdf';
+import type { Locale } from '../../../i18n/locales';
+import { t } from '../../../i18n/utils';
+
+const lang: Locale = 'zh';
+const tr = t(lang);
+const toolTr = tr.tools.pdfSplit;
+const title = `${toolTr.name} - ${tr.site.name}`;
+const description = toolTr.description;
+const uiStrings = { common: tr.common, pdfSplit: tr.pdfSplit };
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: toolTr.name,
+  description: toolTr.description,
+  url: 'https://keepdf.com/zh/pdf/split',
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+  inLanguage: lang,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+---
+
+<ToolLayout
+  title={title}
+  toolName={toolTr.name}
+  description={description}
+  category="pdf"
+  jsonLd={jsonLd}
+  lang={lang}
+>
+  <SplitPdf client:only="react" translations={uiStrings} />
+</ToolLayout>

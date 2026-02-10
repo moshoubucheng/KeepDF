@@ -1,0 +1,35 @@
+---
+import ToolLayout from '@layouts/ToolLayout.astro';
+import HeicConvert from '@components/image/HeicConvert';
+import type { Locale } from '../../../i18n/locales';
+import { t } from '../../../i18n/utils';
+
+const lang: Locale = 'zh';
+const tr = t(lang);
+const toolTr = tr.tools.heicConvert;
+const title = `${toolTr.name} - ${tr.site.name}`;
+const description = toolTr.description;
+const uiStrings = { common: tr.common, heicConvert: tr.heicConvert };
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  name: toolTr.name,
+  description: toolTr.description,
+  url: 'https://keepdf.com/zh/image/heic',
+  applicationCategory: 'UtilityApplication',
+  operatingSystem: 'Any',
+  inLanguage: lang,
+  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+};
+---
+
+<ToolLayout
+  title={title}
+  toolName={toolTr.name}
+  description={description}
+  category="image"
+  jsonLd={jsonLd}
+  lang={lang}
+>
+  <HeicConvert client:only="react" translations={uiStrings} />
+</ToolLayout>

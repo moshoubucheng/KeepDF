@@ -1,0 +1,118 @@
+---
+import Header from '@components/layout/Header.astro';
+import Footer from '@components/layout/Footer.astro';
+import type { Locale } from '../i18n/locales';
+import { locales, defaultLocale, localePath, ogLocales, hreflangCodes } from '../i18n/locales';
+import { getHtmlLang } from '../i18n/utils';
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  ogImage?: string;
+  lang: Locale;
+}
+
+const {
+  title,
+  description = 'Privacy-first file tools that work entirely in your browser. No uploads, no servers.',
+  ogImage = '/favicon.svg',
+  lang,
+} = Astro.props;
+
+const htmlLang = getHtmlLang(lang);
+const canonicalUrl = new URL(Astro.url.pathname, 'https://keepdf.com');
+
+// Strip locale prefix to get base path for hreflang generation
+function stripLocalePrefix(path: string): string {
+  for (const loc of locales) {
+    if (loc === defaultLocale) continue;
+    if (path === `/${loc}` || path === `/${loc}/`) return '/';
+    if (path.startsWith(`/${loc}/`)) return path.slice(loc.length + 1);
+  }
+  return path;
+}
+
+const basePath = stripLocalePrefix(Astro.url.pathname);
+const siteOrigin = 'https://keepdf.com';
+
+// Generate hreflang alternate URLs for all locales
+const hreflangLinks = locales.map((loc) => ({
+  hreflang: hreflangCodes[loc],
+  href: `${siteOrigin}${localePath(basePath, loc)}`,
+}));
+---
+
+<!doctype html>
+<html lang={htmlLang} class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl.href} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Hreflang alternate links for multilingual SEO -->
+    {hreflangLinks.map((link) => (
+      <link rel="alternate" hreflang={link.hreflang} href={link.href} />
+    ))}
+    <link rel="alternate" hreflang="x-default" href={`${siteOrigin}${basePath}`} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={canonicalUrl.href} />
+    <meta property="og:locale" content={ogLocales[lang]} />
+    {locales.filter((l) => l !== lang).map((l) => (
+      <meta property="og:locale:alternate" content={ogLocales[l]} />
+    ))}
+    <meta property="og:site_name" content="KeepDF" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <slot name="head" />
+
+    <!-- Dark mode init (prevent FOUC) -->
+    <script is:inline>
+      (function() {
+        var t = localStorage.getItem('theme');
+        if (t === 'dark' || (!t && matchMedia('(prefers-color-scheme:dark)').matches)) {
+          document.documentElement.classList.add('dark');
+        }
+      })();
+    </script>
+
+    <!-- Auto-detect browser language on first visit -->
+    <script is:inline>
+      (function() {
+        var pref = localStorage.getItem('lang_pref');
+        if (pref) return;
+        var path = location.pathname;
+        var isJa = path === '/ja' || path === '/ja/' || path.startsWith('/ja/');
+        var isZh = path === '/zh' || path === '/zh/' || path.startsWith('/zh/');
+        if (isJa || isZh) return;
+        var lang = (navigator.language || '').toLowerCase();
+        var target = '';
+        if (lang.startsWith('ja')) target = '/ja';
+        else if (lang.startsWith('zh')) target = '/zh';
+        if (target) location.replace(target + path);
+      })();
+    </script>
+  </head>
+  <body class="flex h-full min-h-screen flex-col bg-page text-fg antialiased">
+    <Header lang={lang} />
+    <main class="flex-1 animate-fade-in">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

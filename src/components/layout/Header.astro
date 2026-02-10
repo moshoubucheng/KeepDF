@@ -1,0 +1,204 @@
+---
+import type { Locale } from '../../i18n/locales';
+import { locales, localeLabels, defaultLocale, localePath } from '../../i18n/locales';
+import { getLocalizedCategories } from '@lib/utils/toolRegistry';
+
+interface Props {
+  lang: Locale;
+}
+
+const { lang } = Astro.props;
+const pathname = Astro.url.pathname;
+const categories = getLocalizedCategories(lang);
+
+// Strip locale prefix from pathname to get the base path
+function stripLocalePrefix(path: string): string {
+  for (const loc of locales) {
+    if (loc === defaultLocale) continue;
+    if (path === `/${loc}` || path === `/${loc}/`) return '/';
+    if (path.startsWith(`/${loc}/`)) return path.slice(loc.length + 1);
+  }
+  return path;
+}
+
+const basePath = stripLocalePrefix(pathname);
+
+// Build language switcher links
+const langLinks = locales.map((loc) => ({
+  locale: loc,
+  label: localeLabels[loc],
+  href: localePath(basePath, loc),
+  active: loc === lang,
+}));
+
+// Home link for the current locale
+const homeHref = localePath('/', lang);
+---
+
+<header class="border-b border-edge bg-surface">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+    <a href={homeHref} class="flex items-center gap-2 text-xl font-bold text-brand-700">
+      <img src="/favicon.svg" alt="" class="h-8 w-8" />
+      KeepDF
+    </a>
+
+    <!-- Desktop nav -->
+    <ul class="hidden items-center gap-6 md:flex">
+      {categories.map((cat) => (
+        <li>
+          <a
+            href={cat.path}
+            class:list={[
+              'text-sm font-medium transition-colors hover:text-brand-600',
+              pathname.startsWith(cat.path) ? 'text-brand-600' : 'text-fg-sec',
+            ]}
+          >
+            {cat.icon} {cat.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="flex items-center gap-3">
+      <!-- Theme toggle -->
+      <button
+        id="theme-toggle"
+        class="rounded-md p-2 text-fg-muted transition-colors hover:bg-hover hover:text-fg"
+        aria-label="Toggle dark mode"
+      >
+        <!-- Sun icon (shown in dark mode) -->
+        <svg class="hidden h-5 w-5 dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <!-- Moon icon (shown in light mode) -->
+        <svg class="block h-5 w-5 dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
+
+      <!-- Language switcher -->
+      <div class="relative" id="lang-switcher">
+        <button
+          id="lang-switcher-btn"
+          class="flex items-center gap-1 rounded-md border border-edge px-2 py-1 text-xs font-medium text-fg-sec transition-colors hover:bg-hover hover:text-fg"
+          aria-label="Switch language"
+          aria-expanded="false"
+          aria-haspopup="true"
+        >
+          <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9" />
+          </svg>
+          {localeLabels[lang]}
+          <svg class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div
+          id="lang-dropdown"
+          class="absolute right-0 z-50 mt-1 min-w-[8rem] origin-top-right scale-95 overflow-hidden rounded-md border border-edge bg-surface opacity-0 shadow-lg transition-all duration-150 pointer-events-none"
+        >
+          {langLinks.map((link) => (
+            <a
+              href={link.href}
+              class:list={[
+                'block px-3 py-2 text-xs font-medium transition-colors hover:bg-hover',
+                link.active ? 'bg-brand-50 text-brand-700 dark:bg-brand-950 dark:text-brand-300' : 'text-fg-sec hover:text-fg',
+              ]}
+            >
+              {link.label}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        class="rounded-md p-2 text-fg-muted hover:bg-hover-strong md:hidden"
+        aria-label="Toggle menu"
+      >
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile nav (animated with grid-rows) -->
+  <div id="mobile-menu" class="grid grid-rows-[0fr] transition-[grid-template-rows] duration-200 ease-out border-t border-edge md:hidden">
+    <div class="overflow-hidden">
+      <ul class="space-y-1 px-4 py-3">
+        {categories.map((cat) => (
+          <li>
+            <a
+              href={cat.path}
+              class:list={[
+                'block rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-hover-strong',
+                pathname.startsWith(cat.path) ? 'text-brand-600 bg-brand-50 dark:bg-brand-950 dark:text-brand-300' : 'text-fg-sec',
+              ]}
+            >
+              {cat.icon} {cat.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  // Mobile menu toggle (animated via grid-rows)
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => {
+    const isOpen = menu?.classList.contains('grid-rows-[1fr]');
+    if (isOpen) {
+      menu?.classList.remove('grid-rows-[1fr]');
+      menu?.classList.add('grid-rows-[0fr]');
+    } else {
+      menu?.classList.remove('grid-rows-[0fr]');
+      menu?.classList.add('grid-rows-[1fr]');
+    }
+  });
+
+  // Language dropdown
+  const langBtn = document.getElementById('lang-switcher-btn');
+  const langDropdown = document.getElementById('lang-dropdown');
+
+  function openLangDropdown() {
+    langDropdown?.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+    langDropdown?.classList.add('scale-100', 'opacity-100', 'pointer-events-auto');
+    langBtn?.setAttribute('aria-expanded', 'true');
+  }
+  function closeLangDropdown() {
+    langDropdown?.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+    langDropdown?.classList.remove('scale-100', 'opacity-100', 'pointer-events-auto');
+    langBtn?.setAttribute('aria-expanded', 'false');
+  }
+
+  langBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = langDropdown?.classList.contains('opacity-100');
+    isOpen ? closeLangDropdown() : openLangDropdown();
+  });
+
+  document.addEventListener('click', closeLangDropdown);
+
+  // Save language preference when user manually switches
+  document.querySelectorAll('#lang-dropdown a').forEach((a) => {
+    a.addEventListener('click', () => {
+      const href = a.getAttribute('href') || '/';
+      let pref = 'en';
+      if (href.startsWith('/ja')) pref = 'ja';
+      else if (href.startsWith('/zh')) pref = 'zh';
+      localStorage.setItem('lang_pref', pref);
+    });
+  });
+
+  // Theme toggle
+  const themeToggle = document.getElementById('theme-toggle');
+  themeToggle?.addEventListener('click', () => {
+    const isDark = document.documentElement.classList.toggle('dark');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+</script>
