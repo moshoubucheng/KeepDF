@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* ── Semantic color variables (no --color- prefix to avoid @theme collision) ── */
 :root {
