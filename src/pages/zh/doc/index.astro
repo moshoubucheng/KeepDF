@@ -10,9 +10,29 @@ const lang: Locale = 'zh';
 const tr = t(lang);
 const category = getCategoryMeta(lang, 'doc')!;
 const tools = getToolsByCategory(lang, 'doc');
+
+const siteOrigin = 'https://keepdf.com';
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: category.name,
+  description: category.description,
+  url: `${siteOrigin}${category.path}`,
+  inLanguage: lang,
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: tools.map((tool, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `${siteOrigin}${tool.path}`,
+      name: tool.name,
+    })),
+  },
+};
 ---
 
-<BaseLayout title={`${category.name} - ${tr.site.name}`} description={category.description} lang={lang}>
+<BaseLayout title={`${category.name} - ${tr.site.name}`} description={category.description} lang={lang} ogImage={`https://keepdf.com/og/${lang}/doc.png`}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
   <div class="mx-auto max-w-4xl px-4 py-10">
     <!-- Breadcrumb -->
     <nav class="mb-6 text-sm text-fg-muted" aria-label="Breadcrumb">

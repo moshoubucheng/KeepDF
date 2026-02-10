@@ -16,7 +16,7 @@ interface Props {
 const {
   title,
   description = 'Privacy-first file tools that work entirely in your browser. No uploads, no servers.',
-  ogImage = '/favicon.svg',
+  ogImage = 'https://keepdf.com/icon-512.png',
   lang,
 } = Astro.props;
 
@@ -78,9 +78,10 @@ const hreflangLinks = locales.map((loc) => ({
     <meta property="og:site_name" content="KeepDF" />
 
     <!-- Twitter -->
-    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
 
     <slot name="head" />
 

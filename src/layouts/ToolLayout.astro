@@ -20,11 +20,41 @@ const { title, toolName, description, category, jsonLd, lang } = Astro.props;
 const cat = getCategoryMeta(lang, category);
 const homeHref = localePath('/', lang);
 const homeLabel = t(lang).breadcrumb.home;
+
+const siteOrigin = 'https://keepdf.com';
+
+// Build BreadcrumbList
+const breadcrumbList: Record<string, unknown> = {
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: homeLabel, item: `${siteOrigin}${homeHref}` },
+    ...(cat ? [{ '@type': 'ListItem', position: 2, name: cat.name, item: `${siteOrigin}${cat.path}` }] : []),
+    { '@type': 'ListItem', position: 3, name: toolName },
+  ],
+};
+
+// Wrap incoming jsonLd (WebApplication) in @graph with BreadcrumbList
+const enhancedJsonLd = jsonLd ? {
+  '@context': 'https://schema.org',
+  '@graph': [
+    Object.fromEntries(Object.entries(jsonLd).filter(([k]) => k !== '@context')),
+    breadcrumbList,
+  ],
+} : undefined;
+
+// Auto-compute OG image path
+// Tool pages: /pdf/merge (en), /ja/pdf/merge (ja), /zh/image/compress (zh)
+// OG images: /og/{locale}/{category}-{slug}.png
+const pathParts = Astro.url.pathname.replace(/\/$/, '').split('/').filter(Boolean);
+const isLocalePrefixed = pathParts.length >= 3;
+const toolCategory = isLocalePrefixed ? pathParts[1] : pathParts[0];
+const toolSlug = isLocalePrefixed ? pathParts[2] : pathParts[1];
+const ogImage = `${siteOrigin}/og/${lang}/${toolCategory}-${toolSlug}.png`;
 ---
 
-<BaseLayout title={title} description={description} lang={lang}>
-  {jsonLd && (
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
+<BaseLayout title={title} description={description} lang={lang} ogImage={ogImage}>
+  {enhancedJsonLd && (
+    <script type="application/ld+json" set:html={JSON.stringify(enhancedJsonLd)} slot="head" />
   )}
 
   <div class="mx-auto max-w-4xl px-4 py-8">

@@ -9,9 +9,30 @@ import { localePath } from '../../i18n/locales';
 const lang: Locale = 'ja';
 const tr = t(lang);
 const localizedCategories = getLocalizedCategories(lang);
+
+const siteUrl = lang === 'en' ? 'https://keepdf.com' : `https://keepdf.com/${lang}`;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      name: 'KeepDF',
+      url: siteUrl,
+      description: tr.site.description,
+      inLanguage: lang,
+    },
+    {
+      '@type': 'Organization',
+      name: 'KeepDF',
+      url: 'https://keepdf.com',
+      logo: 'https://keepdf.com/icon-512.png',
+    },
+  ],
+};
 ---
 
-<BaseLayout title={`${tr.site.name} - ${tr.site.tagline}`} description={tr.site.description} lang={lang}>
+<BaseLayout title={`${tr.site.name} - ${tr.site.tagline}`} description={tr.site.description} lang={lang} ogImage={`https://keepdf.com/og/${lang}/home.png`}>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
   <!-- Hero -->
   <section class="bg-[linear-gradient(to_bottom,#eff6ff,#ffffff)] dark:bg-[radial-gradient(ellipse_at_top,#1e3a8a_0%,#111827_70%)] py-16 text-center">
     <div class="mx-auto max-w-3xl px-4">
