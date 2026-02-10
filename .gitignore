@@ -17,6 +17,9 @@ pnpm-debug.log*
 .env
 .env.production
 
+# cached fonts for OG image generation
+scripts/fonts/
+
 # macOS-specific files
 .DS_Store
 
