@@ -55,6 +55,9 @@ const hreflangLinks = locales.map((loc) => ({
     <link rel="canonical" href={canonicalUrl.href} />
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#2563eb" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
 
     <!-- Hreflang alternate links for multilingual SEO -->
     {hreflangLinks.map((link) => (
@@ -114,5 +117,10 @@ const hreflangLinks = locales.map((loc) => ({
       <slot />
     </main>
     <Footer lang={lang} />
+    <script is:inline>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js');
+      }
+    </script>
   </body>
 </html>
