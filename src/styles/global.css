@@ -1,35 +1,35 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-/* ── Semantic color variables ── */
+/* ── Semantic color variables (no --color- prefix to avoid @theme collision) ── */
 :root {
-  --color-surface: #ffffff;
-  --color-page: #f9fafb;
-  --color-inset: #f3f4f6;
-  --color-hover: #f9fafb;
-  --color-hover-strong: #f3f4f6;
-  --color-fg: #111827;
-  --color-fg-sec: #4b5563;
-  --color-fg-muted: #6b7280;
-  --color-fg-faint: #9ca3af;
-  --color-edge: #e5e7eb;
-  --color-edge-soft: #f3f4f6;
-  --color-edge-input: #d1d5db;
+  --sem-surface: #ffffff;
+  --sem-page: #f9fafb;
+  --sem-inset: #f3f4f6;
+  --sem-hover: #f9fafb;
+  --sem-hover-strong: #f3f4f6;
+  --sem-fg: #111827;
+  --sem-fg-sec: #4b5563;
+  --sem-fg-muted: #6b7280;
+  --sem-fg-faint: #9ca3af;
+  --sem-edge: #e5e7eb;
+  --sem-edge-soft: #f3f4f6;
+  --sem-edge-input: #d1d5db;
 }
 
 .dark {
-  --color-surface: #1f2937;
-  --color-page: #111827;
-  --color-inset: #374151;
-  --color-hover: #374151;
-  --color-hover-strong: #4b5563;
-  --color-fg: #f9fafb;
-  --color-fg-sec: #d1d5db;
-  --color-fg-muted: #9ca3af;
-  --color-fg-faint: #6b7280;
-  --color-edge: #374151;
-  --color-edge-soft: #1f2937;
-  --color-edge-input: #4b5563;
+  --sem-surface: #1f2937;
+  --sem-page: #111827;
+  --sem-inset: #374151;
+  --sem-hover: #374151;
+  --sem-hover-strong: #4b5563;
+  --sem-fg: #f9fafb;
+  --sem-fg-sec: #d1d5db;
+  --sem-fg-muted: #9ca3af;
+  --sem-fg-faint: #6b7280;
+  --sem-edge: #374151;
+  --sem-edge-soft: #1f2937;
+  --sem-edge-input: #4b5563;
 }
 
 @theme {
@@ -52,19 +52,19 @@
   --color-warning-500: #f59e0b;
   --color-error-500: #ef4444;
 
-  /* Semantic tokens mapped to CSS variables */
-  --color-surface: var(--color-surface);
-  --color-page: var(--color-page);
-  --color-inset: var(--color-inset);
-  --color-hover: var(--color-hover);
-  --color-hover-strong: var(--color-hover-strong);
-  --color-fg: var(--color-fg);
-  --color-fg-sec: var(--color-fg-sec);
-  --color-fg-muted: var(--color-fg-muted);
-  --color-fg-faint: var(--color-fg-faint);
-  --color-edge: var(--color-edge);
-  --color-edge-soft: var(--color-edge-soft);
-  --color-edge-input: var(--color-edge-input);
+  /* Semantic tokens → CSS variables (no circular reference) */
+  --color-surface: var(--sem-surface);
+  --color-page: var(--sem-page);
+  --color-inset: var(--sem-inset);
+  --color-hover: var(--sem-hover);
+  --color-hover-strong: var(--sem-hover-strong);
+  --color-fg: var(--sem-fg);
+  --color-fg-sec: var(--sem-fg-sec);
+  --color-fg-muted: var(--sem-fg-muted);
+  --color-fg-faint: var(--sem-fg-faint);
+  --color-edge: var(--sem-edge);
+  --color-edge-soft: var(--sem-edge-soft);
+  --color-edge-input: var(--sem-edge-input);
 
   /* Animations */
   --animate-fade-in: fade-in 0.3s ease-out;
