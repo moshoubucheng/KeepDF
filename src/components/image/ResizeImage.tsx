@@ -7,6 +7,8 @@ import { useFileUpload } from '@hooks/useFileUpload';
 import { useDownload } from '@hooks/useDownload';
 import { resizeImage } from '@lib/image/resize';
 import { replaceExtension } from '@lib/utils/fileHelpers';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import type { Translations } from '@/i18n/translations';
 
 const ACCEPTED = ['.png', '.jpg', '.jpeg', '.webp', 'image/png', 'image/jpeg', 'image/webp'];
@@ -164,12 +166,12 @@ export default function ResizeImage({ translations }: ResizeImageProps) {
               {/* Width */}
               <div className="flex-1">
                 <label className="mb-1 block text-xs text-fg-muted">{translations?.imageResize.width ?? 'Width'} (px)</label>
-                <input
+                <Input
                   type="number"
                   min={1}
                   value={width}
                   onChange={(e) => handleWidthChange(Number(e.target.value))}
-                  className="w-full rounded-lg border border-edge-input px-3 py-2 text-sm tabular-nums focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="tabular-nums"
                 />
               </div>
 
@@ -208,12 +210,12 @@ export default function ResizeImage({ translations }: ResizeImageProps) {
               {/* Height */}
               <div className="flex-1">
                 <label className="mb-1 block text-xs text-fg-muted">{translations?.imageResize.height ?? 'Height'} (px)</label>
-                <input
+                <Input
                   type="number"
                   min={1}
                   value={height}
                   onChange={(e) => handleHeightChange(Number(e.target.value))}
-                  className="w-full rounded-lg border border-edge-input px-3 py-2 text-sm tabular-nums focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
+                  className="tabular-nums"
                 />
               </div>
             </div>
@@ -241,15 +243,14 @@ export default function ResizeImage({ translations }: ResizeImageProps) {
 
           {/* Action buttons */}
           <div className="flex flex-wrap items-center gap-3 sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-            <button
+            <Button
               onClick={handleResize}
               disabled={isProcessing || width <= 0 || height <= 0 || files.every((f) => f.status === 'done')}
-              className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isProcessing
                 ? (translations?.imageResize.resizing ?? 'Resizing...')
                 : (translations?.imageResize.resizeBtn ?? 'Resize')}
-            </button>
+            </Button>
 
             {doneFiles.length > 1 && (
               <DownloadButton
@@ -262,12 +263,11 @@ export default function ResizeImage({ translations }: ResizeImageProps) {
             )}
 
             {files.length > 0 && (
-              <button
+              <Button variant="ghost"
                 onClick={clearFiles}
-                className="rounded-lg px-4 py-2.5 text-sm font-medium text-fg-sec transition-colors hover:bg-hover-strong"
               >
                 {translations?.common.clear ?? 'Clear'}
-              </button>
+              </Button>
             )}
           </div>
 

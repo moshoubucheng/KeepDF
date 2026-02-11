@@ -1,6 +1,7 @@
 import { useState, useCallback, useRef } from 'react';
 import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import { Button } from '@/components/ui/button';
 import type { Translations } from '@/i18n/translations';
 
 type ViewMode = 'edit' | 'split' | 'preview';
@@ -170,36 +171,26 @@ export default function MarkdownEditor({ translations }: MarkdownEditorProps) {
 
         {/* Action buttons */}
         <div className="flex items-center gap-2">
-          <button
-            onClick={handleNew}
-            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-fg-sec transition-colors hover:bg-hover-strong hover:text-fg"
-          >
+          <Button variant="ghost" size="sm" onClick={handleNew}>
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
             </svg>
             {translations?.mdEditor.newDoc ?? 'New'}
-          </button>
+          </Button>
 
-          <button
-            onClick={handleImport}
-            className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-fg-sec transition-colors hover:bg-hover-strong hover:text-fg"
-          >
+          <Button variant="ghost" size="sm" onClick={handleImport}>
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
             </svg>
             {translations?.mdEditor.importMd ?? 'Import'}
-          </button>
+          </Button>
 
-          <button
-            onClick={handleExport}
-            disabled={!content.trim()}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-          >
+          <Button size="sm" onClick={handleExport} disabled={!content.trim()}>
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
             </svg>
             {translations?.mdEditor.exportMd ?? 'Export .md'}
-          </button>
+          </Button>
         </div>
       </div>
 

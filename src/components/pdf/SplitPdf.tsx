@@ -6,6 +6,9 @@ import DownloadButton from '@components/shared/DownloadButton';
 import { useDownload } from '@hooks/useDownload';
 import { splitPdf } from '@lib/pdf/split';
 import type { Translations } from '@/i18n/translations';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const ACCEPTED_TYPES = ['.pdf', 'application/pdf'];
 
@@ -173,16 +176,15 @@ export default function SplitPdf({ translations }: SplitPdfProps) {
           {/* Range input */}
           {(mode === 'ranges' || mode === 'extract') && (
             <div>
-              <label htmlFor="rangeInput" className="mb-1 block text-sm font-medium text-fg-sec">
+              <Label htmlFor="rangeInput" className="mb-1 block">
                 {translations?.pdfSplit.rangeLabel ?? 'Page ranges'}
-              </label>
-              <input
+              </Label>
+              <Input
                 id="rangeInput"
                 type="text"
                 value={rangeInput}
                 onChange={(e) => setRangeInput(e.target.value)}
                 placeholder={translations?.pdfSplit.rangePlaceholder ?? 'e.g. 1-3, 5, 7-9'}
-                className="w-full rounded-lg border border-edge-input px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               />
               <p className="mt-1 text-xs text-fg-muted">
                 {mode === 'ranges'
@@ -194,15 +196,14 @@ export default function SplitPdf({ translations }: SplitPdfProps) {
 
           {/* Split button */}
           <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-          <button
+          <Button
             onClick={handleSplit}
             disabled={processing || !canSplit}
-            className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {processing
               ? (translations?.pdfSplit.splitting ?? 'Splitting...')
               : (translations?.pdfSplit.splitBtn ?? 'Split PDF')}
-          </button>
+          </Button>
           </div>
         </>
       )}

@@ -6,6 +6,7 @@ import DownloadButton from '@components/shared/DownloadButton';
 import { useFileUpload } from '@hooks/useFileUpload';
 import { useDownload } from '@hooks/useDownload';
 import { imagesToPdf } from '@lib/image/toPdf';
+import { Button } from '@/components/ui/button';
 import type { Translations } from '@/i18n/translations';
 
 const ACCEPTED = ['.png', '.jpg', '.jpeg', '.webp', 'image/png', 'image/jpeg', 'image/webp'];
@@ -127,15 +128,14 @@ export default function ImageToPdf({ translations }: ImageToPdfProps) {
 
           {/* Action buttons */}
           <div className="flex flex-wrap items-center gap-3 sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-            <button
+            <Button
               onClick={handleConvert}
               disabled={isProcessing || files.length === 0}
-              className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isProcessing
                 ? (translations?.imageToPdf.converting ?? 'Converting...')
                 : (translations?.imageToPdf.convertBtn ?? 'Convert to PDF')}
-            </button>
+            </Button>
 
             {result && (
               <DownloadButton
@@ -145,12 +145,11 @@ export default function ImageToPdf({ translations }: ImageToPdfProps) {
               />
             )}
 
-            <button
+            <Button variant="ghost"
               onClick={() => { clearFiles(); setResult(null); }}
-              className="rounded-lg px-4 py-2.5 text-sm font-medium text-fg-sec transition-colors hover:bg-hover-strong"
             >
               {translations?.common.clear ?? 'Clear'}
-            </button>
+            </Button>
           </div>
         </>
       )}

@@ -6,6 +6,8 @@ import DownloadButton from '@components/shared/DownloadButton';
 import { useFileUpload } from '@hooks/useFileUpload';
 import { useDownload } from '@hooks/useDownload';
 import { stitchImages } from '@lib/image/stitch';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import type { Translations } from '@/i18n/translations';
 
 const ACCEPTED = ['.png', '.jpg', '.jpeg', '.webp', 'image/png', 'image/jpeg', 'image/webp'];
@@ -107,13 +109,12 @@ export default function StitchImage({ translations }: StitchImageProps) {
               <label className="mb-2 block text-sm font-medium text-fg-sec">
                 {translations?.imageStitch.spacing ?? 'Spacing (px)'}
               </label>
-              <input
+              <Input
                 type="number"
                 min={0}
                 max={50}
                 value={spacing}
                 onChange={(e) => setSpacing(Math.min(50, Math.max(0, Number(e.target.value))))}
-                className="w-full rounded-lg border border-edge-input px-3 py-2.5 text-sm"
               />
             </div>
           </div>
@@ -130,15 +131,14 @@ export default function StitchImage({ translations }: StitchImageProps) {
 
           {/* Action buttons */}
           <div className="flex flex-wrap items-center gap-3 sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-            <button
+            <Button
               onClick={handleStitch}
               disabled={isProcessing || files.length < 2}
-              className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {isProcessing
                 ? (translations?.imageStitch.stitching ?? 'Stitching...')
                 : (translations?.imageStitch.stitchBtn ?? 'Stitch Images')}
-            </button>
+            </Button>
 
             {result && (
               <DownloadButton
@@ -148,12 +148,11 @@ export default function StitchImage({ translations }: StitchImageProps) {
               />
             )}
 
-            <button
+            <Button variant="ghost"
               onClick={() => { clearFiles(); setResult(null); }}
-              className="rounded-lg px-4 py-2.5 text-sm font-medium text-fg-sec transition-colors hover:bg-hover-strong"
             >
               {translations?.common.clear ?? 'Clear'}
-            </button>
+            </Button>
           </div>
         </>
       )}

@@ -5,6 +5,7 @@ import DownloadButton from '@components/shared/DownloadButton';
 import { useDownload } from '@hooks/useDownload';
 import { getPageCount, pdfToImages } from '@lib/pdf/toImage';
 import type { PdfToImageOptions } from '@lib/pdf/toImage';
+import { Button } from '@/components/ui/button';
 import type { Translations } from '@/i18n/translations';
 
 const ACCEPTED_TYPES = ['.pdf', 'application/pdf'];
@@ -159,15 +160,14 @@ export default function PdfToImage({ translations }: PdfToImageProps) {
           </div>
 
           <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-          <button
+          <Button
             onClick={handleConvert}
             disabled={processing}
-            className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {processing
               ? (translations?.pdfToImage.converting ?? 'Converting...')
               : (translations?.pdfToImage.convertBtn ?? 'Convert to Images')}
-          </button>
+          </Button>
           </div>
         </>
       )}

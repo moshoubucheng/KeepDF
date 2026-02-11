@@ -6,6 +6,9 @@ import { useDownload } from '@hooks/useDownload';
 import { addWatermark } from '@lib/pdf/watermark';
 import type { WatermarkOptions } from '@lib/pdf/watermark';
 import type { Translations } from '@/i18n/translations';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const ACCEPTED_TYPES = ['.pdf', 'application/pdf'];
 
@@ -107,25 +110,24 @@ export default function PdfWatermark({ translations }: PdfWatermarkProps) {
           <div className="rounded-lg border border-edge bg-surface p-4 space-y-4">
             {/* Watermark text */}
             <div>
-              <label htmlFor="wm-text" className="mb-1 block text-sm font-medium text-fg-sec">
+              <Label htmlFor="wm-text" className="mb-1 block">
                 {translations?.pdfWatermark.text ?? 'Watermark text'}
-              </label>
-              <input
+              </Label>
+              <Input
                 id="wm-text"
                 type="text"
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 placeholder={translations?.pdfWatermark.textPlaceholder ?? 'Enter watermark text'}
-                className="w-full rounded-lg border border-edge-input px-3 py-2 text-sm focus:border-brand-500 focus:outline-none focus:ring-1 focus:ring-brand-500"
               />
             </div>
 
             {/* Font size slider */}
             <div>
-              <label className="mb-2 flex items-center justify-between text-sm font-medium text-fg-sec">
+              <Label className="mb-2 flex items-center justify-between">
                 <span>{translations?.pdfWatermark.fontSize ?? 'Font size'}</span>
                 <span className="tabular-nums text-brand-600">{fontSize}px</span>
-              </label>
+              </Label>
               <input
                 type="range"
                 min={12}
@@ -142,10 +144,10 @@ export default function PdfWatermark({ translations }: PdfWatermarkProps) {
 
             {/* Opacity slider */}
             <div>
-              <label className="mb-2 flex items-center justify-between text-sm font-medium text-fg-sec">
+              <Label className="mb-2 flex items-center justify-between">
                 <span>{translations?.pdfWatermark.opacity ?? 'Opacity'}</span>
                 <span className="tabular-nums text-brand-600">{Math.round(opacity * 100)}%</span>
-              </label>
+              </Label>
               <input
                 type="range"
                 min={5}
@@ -162,9 +164,9 @@ export default function PdfWatermark({ translations }: PdfWatermarkProps) {
 
             {/* Position select */}
             <div>
-              <label htmlFor="wm-position" className="mb-1 block text-sm font-medium text-fg-sec">
+              <Label htmlFor="wm-position" className="mb-1 block">
                 {translations?.pdfWatermark.position ?? 'Position'}
-              </label>
+              </Label>
               <select
                 id="wm-position"
                 value={position}
@@ -183,10 +185,10 @@ export default function PdfWatermark({ translations }: PdfWatermarkProps) {
 
             {/* Rotation input */}
             <div>
-              <label className="mb-2 flex items-center justify-between text-sm font-medium text-fg-sec">
+              <Label className="mb-2 flex items-center justify-between">
                 <span>{translations?.pdfWatermark.rotation ?? 'Rotation'}</span>
                 <span className="tabular-nums text-brand-600">{rotation}&deg;</span>
-              </label>
+              </Label>
               <input
                 type="range"
                 min={-180}
@@ -203,9 +205,9 @@ export default function PdfWatermark({ translations }: PdfWatermarkProps) {
 
             {/* Color picker */}
             <div>
-              <label htmlFor="wm-color" className="mb-1 block text-sm font-medium text-fg-sec">
+              <Label htmlFor="wm-color" className="mb-1 block">
                 {translations?.pdfWatermark.color ?? 'Color'}
-              </label>
+              </Label>
               <input
                 id="wm-color"
                 type="color"
@@ -217,15 +219,14 @@ export default function PdfWatermark({ translations }: PdfWatermarkProps) {
           </div>
 
           <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-          <button
+          <Button
             onClick={handleApply}
             disabled={processing || !text.trim()}
-            className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {processing
               ? (translations?.pdfWatermark.applying ?? 'Applying...')
               : (translations?.pdfWatermark.applyBtn ?? 'Apply Watermark')}
-          </button>
+          </Button>
           </div>
         </>
       )}

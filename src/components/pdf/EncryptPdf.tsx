@@ -6,6 +6,9 @@ import { useDownload } from '@hooks/useDownload';
 import { encryptPdf } from '@lib/pdf/encryptPdf';
 import type { Translations } from '@/i18n/translations';
 import { PDFDocument } from 'pdf-lib';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const ACCEPTED_TYPES = ['.pdf', 'application/pdf'];
 
@@ -131,23 +134,21 @@ export default function EncryptPdf({ translations }: EncryptPdfProps) {
         <>
           <div className="space-y-3 rounded-xl border border-edge bg-surface p-4">
             <div className="space-y-1">
-              <label className="text-sm font-medium text-fg-sec">{tr?.password ?? 'Password'}</label>
-              <input
+              <Label>{tr?.password ?? 'Password'}</Label>
+              <Input
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder={tr?.passwordPlaceholder ?? 'Enter password'}
-                className="w-full rounded-lg border border-edge bg-surface px-3 py-2 text-sm text-fg outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400"
               />
             </div>
             <div className="space-y-1">
-              <label className="text-sm font-medium text-fg-sec">{tr?.confirmPassword ?? 'Confirm password'}</label>
-              <input
+              <Label>{tr?.confirmPassword ?? 'Confirm password'}</Label>
+              <Input
                 type="password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder={tr?.confirmPlaceholder ?? 'Re-enter password'}
-                className="w-full rounded-lg border border-edge bg-surface px-3 py-2 text-sm text-fg outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400"
               />
             </div>
           </div>
@@ -157,13 +158,12 @@ export default function EncryptPdf({ translations }: EncryptPdfProps) {
           </p>
 
           <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-            <button
+            <Button
               onClick={handleEncrypt}
               disabled={processing || !password || !confirmPassword}
-              className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {processing ? (tr?.encrypting ?? 'Encrypting PDF...') : (tr?.encryptBtn ?? 'Encrypt PDF')}
-            </button>
+            </Button>
           </div>
         </>
       )}

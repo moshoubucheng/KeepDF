@@ -5,6 +5,9 @@ import { useDownload } from '@hooks/useDownload';
 import { rotatePdf, parsePageRanges, type RotationAngle } from '@lib/pdf/rotatePdf';
 import type { Translations } from '@/i18n/translations';
 import { PDFDocument } from 'pdf-lib';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 const ACCEPTED_TYPES = ['.pdf', 'application/pdf'];
 
@@ -185,15 +188,14 @@ export default function RotatePdf({ translations }: RotatePdfProps) {
           {/* Page range input */}
           {mode === 'specific' && (
             <div className="space-y-1">
-              <label className="text-sm font-medium text-fg-sec">
+              <Label>
                 {tr?.pageRange ?? 'Pages to rotate'}
-              </label>
-              <input
+              </Label>
+              <Input
                 type="text"
                 value={pageRange}
                 onChange={(e) => setPageRange(e.target.value)}
                 placeholder={tr?.pageRangePlaceholder ?? 'e.g. 1-3, 5, 7-9'}
-                className="w-full rounded-lg border border-edge bg-surface px-3 py-2 text-sm text-fg outline-none focus:border-brand-400 focus:ring-1 focus:ring-brand-400"
               />
               <p className="text-xs text-fg-muted">
                 {tr?.pageRangeHelp ?? 'Separate pages with commas. Example: 1-3, 5, 7-9'}
@@ -202,15 +204,14 @@ export default function RotatePdf({ translations }: RotatePdfProps) {
           )}
 
           <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-            <button
+            <Button
               onClick={handleRotate}
               disabled={processing}
-              className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {processing
                 ? (tr?.rotating ?? 'Rotating pages...')
                 : (tr?.rotateBtn ?? 'Rotate PDF')}
-            </button>
+            </Button>
           </div>
         </>
       )}

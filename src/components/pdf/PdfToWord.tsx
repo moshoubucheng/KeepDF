@@ -4,6 +4,7 @@ import ProgressBar from '@components/shared/ProgressBar';
 import DownloadButton from '@components/shared/DownloadButton';
 import { useDownload } from '@hooks/useDownload';
 import { getPageCount, pdfToWord } from '@lib/pdf/toWord';
+import { Button } from '@/components/ui/button';
 import type { Translations } from '@/i18n/translations';
 
 const ACCEPTED_TYPES = ['.pdf', 'application/pdf'];
@@ -115,12 +116,12 @@ export default function PdfToWord({ translations }: PdfToWordProps) {
               </span>
             )}
           </p>
-          <button
+          <Button
+            variant="ghost"
             onClick={handleClear}
-            className="text-sm text-fg-muted hover:text-fg-sec transition-colors"
           >
             {translations?.common.clear ?? 'Clear'}
-          </button>
+          </Button>
         </div>
       )}
 
@@ -131,15 +132,14 @@ export default function PdfToWord({ translations }: PdfToWordProps) {
           </p>
 
           <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-          <button
+          <Button
             onClick={handleConvert}
             disabled={processing}
-            className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {processing
               ? (translations?.pdfToWord.converting ?? 'Converting to Word...')
               : (translations?.pdfToWord.convertBtn ?? 'Convert to Word')}
-          </button>
+          </Button>
           </div>
         </>
       )}

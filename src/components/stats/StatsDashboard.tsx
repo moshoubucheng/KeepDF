@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface StatsRow {
   date: string;
@@ -81,21 +83,17 @@ export default function StatsDashboard() {
       <div className="mx-auto max-w-sm py-20">
         <form onSubmit={handleLogin} className="rounded-xl border border-edge bg-surface p-6">
           <h2 className="mb-4 text-lg font-semibold text-fg">Stats Dashboard</h2>
-          <input
+          <Input
             type="password"
             value={key}
             onChange={(e) => setKey(e.target.value)}
             placeholder="Enter stats key"
-            className="mb-3 w-full rounded-lg border border-edge-input bg-page px-3 py-2 text-fg placeholder:text-fg-faint focus:border-brand-500 focus:outline-none"
+            className="mb-3"
           />
           {error && <p className="mb-3 text-sm text-error-500">{error}</p>}
-          <button
-            type="submit"
-            disabled={loading || !key.trim()}
-            className="w-full rounded-lg bg-brand-600 px-4 py-2 font-medium text-white hover:bg-brand-700 disabled:opacity-50"
-          >
+          <Button type="submit" className="w-full" disabled={loading || !key.trim()}>
             {loading ? 'Loading...' : 'View Stats'}
-          </button>
+          </Button>
         </form>
       </div>
     );
@@ -146,17 +144,14 @@ export default function StatsDashboard() {
         <h1 className="text-2xl font-bold text-fg">Stats Dashboard</h1>
         <div className="flex items-center gap-2">
           {RANGES.map((r) => (
-            <button
+            <Button
               key={r}
+              variant={range === r ? 'default' : 'outline'}
+              size="sm"
               onClick={() => setRange(r)}
-              className={`rounded-lg px-3 py-1.5 text-sm font-medium transition ${
-                range === r
-                  ? 'bg-brand-600 text-white'
-                  : 'bg-surface text-fg-sec hover:bg-hover-strong border border-edge'
-              }`}
             >
               {r}d
-            </button>
+            </Button>
           ))}
           {loading && <span className="text-sm text-fg-muted">Loading...</span>}
         </div>

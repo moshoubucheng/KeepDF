@@ -3,6 +3,7 @@ import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { mdToPdf, type MdToPdfOptions } from '@lib/doc/mdToPdf';
 import { useDownload } from '@hooks/useDownload';
+import { Button } from '@/components/ui/button';
 import type { Translations } from '@/i18n/translations';
 
 interface MdToPdfProps {
@@ -69,15 +70,12 @@ export default function MdToPdf({ translations }: MdToPdfProps) {
     <div className="flex flex-col gap-4">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-3 rounded-xl border border-edge bg-surface p-3">
-        <button
-          onClick={handleImport}
-          className="inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm font-medium text-fg-sec transition-colors hover:bg-hover-strong hover:text-fg"
-        >
+        <Button variant="ghost" size="sm" onClick={handleImport}>
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
           </svg>
           {tr?.importFile ?? 'Import .md file'}
-        </button>
+        </Button>
 
         <div className="hidden h-6 w-px bg-edge sm:block" />
 
@@ -115,16 +113,12 @@ export default function MdToPdf({ translations }: MdToPdfProps) {
         <div className="hidden h-6 w-px bg-edge sm:block" />
 
         {/* Export button */}
-        <button
-          onClick={handleExport}
-          disabled={!content.trim() || exporting}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-brand-600 px-3 py-1.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
-        >
+        <Button size="sm" onClick={handleExport} disabled={!content.trim() || exporting}>
           <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
           </svg>
           {exporting ? (tr?.exporting ?? 'Exporting PDF...') : (tr?.exportBtn ?? 'Export as PDF')}
-        </button>
+        </Button>
       </div>
 
       {/* Hidden file input */}

@@ -8,6 +8,7 @@ import { useDownload } from '@hooks/useDownload';
 import { compressPdf } from '@lib/pdf/compress';
 import { formatFileSize } from '@lib/utils/fileHelpers';
 import type { ProcessingResult } from '@types/file';
+import { Button } from '@/components/ui/button';
 import type { Translations } from '@/i18n/translations';
 
 const ACCEPTED_TYPES = ['.pdf', 'application/pdf'];
@@ -92,17 +93,16 @@ export default function CompressPdf({ translations }: CompressPdfProps) {
 
       {pendingCount > 0 && (
         <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-        <button
+        <Button
           onClick={handleCompress}
           disabled={processing}
-          className="inline-flex items-center gap-2 rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-medium text-white transition-all hover:bg-brand-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
         >
           {processing
             ? (translations?.pdfCompress.compressing ?? `Compressing (${currentIndex + 1}/${files.filter((f) => f.status !== 'done').length})...`)
             : (pendingCount === 1
               ? (translations?.pdfCompress.compressBtn ?? 'Compress')
               : (translations?.pdfCompress.compressAll ?? `Compress ${pendingCount} Files`))}
-        </button>
+        </Button>
         </div>
       )}
 
