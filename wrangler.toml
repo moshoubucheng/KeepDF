@@ -1,0 +1,7 @@
+# Only needed for local dev: npx wrangler pages dev dist
+# Production D1 binding is set via Cloudflare Pages dashboard
+
+[[d1_databases]]
+binding = "DB"
+database_name = "keepdf-analytics"
+database_id = "" # Fill after: npx wrangler d1 create keepdf-analytics

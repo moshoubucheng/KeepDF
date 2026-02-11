@@ -123,5 +123,16 @@ const hreflangLinks = locales.map((loc) => ({
         navigator.serviceWorker.register('/sw.js');
       }
     </script>
+    <script is:inline>
+      (function() {
+        var p = location.pathname.replace(/\/$/, '');
+        // Strip locale prefix: /ja/pdf/merge → /pdf/merge
+        p = p.replace(/^\/(ja|zh)\//, '/');
+        // Only track tool pages
+        if (/^\/(pdf|image|doc)\/[\w-]+$/.test(p)) {
+          navigator.sendBeacon('/api/track', JSON.stringify({ path: p, type: 'pageview' }));
+        }
+      })();
+    </script>
   </body>
 </html>
