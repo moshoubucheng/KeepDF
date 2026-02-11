@@ -67,6 +67,7 @@ const en = {
     mdEditor: { name: 'Markdown Editor', description: 'Edit and preview Markdown with live rendering.' },
     mdToPdf: { name: 'Markdown to PDF', description: 'Convert Markdown documents to PDF files.' },
     wordCount: { name: 'Word Count', description: 'Count words, characters, sentences, and estimate reading time.' },
+    wordToPdf: { name: 'Word to PDF', description: 'Convert Word documents (.docx) to PDF files.' },
   },
   common: {
     dropFiles: 'Drop files here or click to browse',
@@ -237,6 +238,12 @@ const en = {
     pasteText: 'Paste or type text here to see word count...',
     importFile: 'Import .txt or .md file',
   },
+  wordToPdf: {
+    converting: 'Converting to PDF...',
+    convertBtn: 'Convert to PDF',
+    resultName: 'document.pdf',
+    note: 'The Word document will be converted to HTML first, then rendered as PDF. Complex layouts may vary slightly.',
+  },
   faq: {
     title: 'Frequently Asked Questions',
     pdfMerge: [
@@ -319,6 +326,11 @@ const en = {
       { q: 'Can I import a text file for counting?', a: 'Yes. You can import .txt or .md files, or simply paste or type text directly into the editor.' },
       { q: 'Does it work with non-English text?', a: 'Yes. The counter handles multilingual text including CJK (Chinese, Japanese, Korean) characters correctly.' },
     ],
+    wordToPdf: [
+      { q: 'Which Word formats are supported?', a: 'The tool supports .docx files (Microsoft Word 2007 and later). Older .doc format is not supported.' },
+      { q: 'Will the PDF preserve my document formatting?', a: 'Text content, headings, lists, tables, and basic formatting are preserved. Complex layouts, custom fonts, and advanced features may vary slightly.' },
+      { q: 'Is my Word document uploaded to a server?', a: 'No. All conversion happens locally in your browser. Your document never leaves your device.' },
+    ],
   },
 };
 
@@ -389,6 +401,7 @@ const ja: typeof en = {
     mdEditor: { name: 'Markdownエディタ', description: 'ライブレンダリングでMarkdownを編集・プレビューします。' },
     mdToPdf: { name: 'Markdown→PDF', description: 'MarkdownドキュメントをPDFファイルに変換します。' },
     wordCount: { name: '文字数カウント', description: '文字数、単語数、文数をカウントし、読了時間を推定します。' },
+    wordToPdf: { name: 'Word→PDF', description: 'Word文書（.docx）をPDFファイルに変換します。' },
   },
   common: {
     dropFiles: 'ここにファイルをドロップまたはクリックして参照',
@@ -559,6 +572,12 @@ const ja: typeof en = {
     pasteText: 'ここにテキストを貼り付けまたは入力すると文字数が表示されます...',
     importFile: '.txtまたは.mdファイルをインポート',
   },
+  wordToPdf: {
+    converting: 'PDFに変換中...',
+    convertBtn: 'PDFに変換',
+    resultName: 'document.pdf',
+    note: 'Word文書はまずHTMLに変換され、その後PDFとしてレンダリングされます。複雑なレイアウトはわずかに異なる場合があります。',
+  },
   faq: {
     title: 'よくある質問',
     pdfMerge: [
@@ -641,6 +660,11 @@ const ja: typeof en = {
       { q: 'テキストファイルをインポートしてカウントできますか？', a: 'はい。.txtまたは.mdファイルをインポートするか、テキストを直接貼り付けまたは入力できます。' },
       { q: '英語以外のテキストにも対応していますか？', a: 'はい。CJK（中国語、日本語、韓国語）を含む多言語テキストを正しく処理します。' },
     ],
+    wordToPdf: [
+      { q: '対応しているWord形式は？', a: '.docxファイル（Microsoft Word 2007以降）に対応しています。古い.doc形式には対応していません。' },
+      { q: 'PDFはドキュメントのフォーマットを保持しますか？', a: 'テキスト、見出し、リスト、テーブル、基本的なフォーマットは保持されます。複雑なレイアウトやカスタムフォントはわずかに異なる場合があります。' },
+      { q: 'Word文書はサーバーにアップロードされますか？', a: 'いいえ。すべての変換はブラウザ内でローカルに行われます。ドキュメントがデバイスから出ることはありません。' },
+    ],
   },
 };
 
@@ -711,6 +735,7 @@ const zh: typeof en = {
     mdEditor: { name: 'Markdown编辑器', description: '实时渲染编辑和预览Markdown。' },
     mdToPdf: { name: 'Markdown转PDF', description: '将Markdown文档转换为PDF文件。' },
     wordCount: { name: '字数统计', description: '统计字数、字符数、句子数并估算阅读时间。' },
+    wordToPdf: { name: 'Word转PDF', description: '将Word文档（.docx）转换为PDF文件。' },
   },
   common: {
     dropFiles: '将文件拖放到此处或点击浏览',
@@ -881,6 +906,12 @@ const zh: typeof en = {
     pasteText: '在此粘贴或输入文本以查看字数统计...',
     importFile: '导入 .txt 或 .md 文件',
   },
+  wordToPdf: {
+    converting: '正在转换为PDF...',
+    convertBtn: '转换为PDF',
+    resultName: 'document.pdf',
+    note: 'Word文档将先转换为HTML，然后渲染为PDF。复杂布局可能会略有不同。',
+  },
   faq: {
     title: '常见问题',
     pdfMerge: [
@@ -962,6 +993,11 @@ const zh: typeof en = {
       { q: '字数统计提供哪些数据？', a: '统计字符数、不含空格的字符数、字数、句子数和段落数，还会估算阅读时间。' },
       { q: '可以导入文本文件进行统计吗？', a: '可以。您可以导入.txt或.md文件，也可以直接粘贴或输入文本。' },
       { q: '支持非英文文本吗？', a: '支持。可正确处理包括CJK（中文、日文、韩文）在内的多语言文本。' },
+    ],
+    wordToPdf: [
+      { q: '支持哪些Word格式？', a: '支持.docx文件（Microsoft Word 2007及更高版本）。不支持旧的.doc格式。' },
+      { q: 'PDF会保留文档格式吗？', a: '文本内容、标题、列表、表格和基本格式会被保留。复杂布局和自定义字体可能会略有不同。' },
+      { q: 'Word文档会上传到服务器吗？', a: '不会。所有转换都在浏览器中本地完成，您的文档从不离开设备。' },
     ],
   },
 };

@@ -43,6 +43,7 @@ export const toolDefs: ToolDef[] = [
   { id: 'md-editor', translationKey: 'mdEditor', category: 'doc', path: '/doc/editor', icon: '✏️', acceptedTypes: ['.md', '.markdown', 'text/markdown'] },
   { id: 'md-to-pdf', translationKey: 'mdToPdf', category: 'doc', path: '/doc/md-to-pdf', icon: '📄', acceptedTypes: ['.md', '.markdown', 'text/markdown'] },
   { id: 'word-count', translationKey: 'wordCount', category: 'doc', path: '/doc/word-count', icon: '🔢', acceptedTypes: ['.txt', '.md', '.markdown', 'text/plain', 'text/markdown'] },
+  { id: 'word-to-pdf', translationKey: 'wordToPdf', category: 'doc', path: '/doc/word-to-pdf', icon: '📄', acceptedTypes: ['.docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'] },
 ];
 
 export function getLocalizedCategories(locale: Locale) {
