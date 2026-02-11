@@ -1,0 +1,8 @@
+---
+import BaseLayout from '@layouts/BaseLayout.astro';
+import StatsDashboard from '@components/stats/StatsDashboard';
+---
+
+<BaseLayout title="Stats - KeepDF" lang="en">
+  <StatsDashboard client:only="react" />
+</BaseLayout>
