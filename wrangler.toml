@@ -4,4 +4,4 @@
 [[d1_databases]]
 binding = "DB"
 database_name = "keepdf-analytics"
-database_id = "" # Fill after: npx wrangler d1 create keepdf-analytics
+database_id = "9793a9b2-68b2-4eac-a427-85ea788058fc"
