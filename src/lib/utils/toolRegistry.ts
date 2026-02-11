@@ -34,6 +34,8 @@ export const toolDefs: ToolDef[] = [
   { id: 'pdf-watermark', translationKey: 'pdfWatermark', category: 'pdf', path: '/pdf/watermark', icon: '💧', acceptedTypes: ['.pdf', 'application/pdf'] },
   { id: 'pdf-to-word', translationKey: 'pdfToWord', category: 'pdf', path: '/pdf/to-word', icon: '📝', acceptedTypes: ['.pdf', 'application/pdf'] },
   { id: 'pdf-rotate', translationKey: 'pdfRotate', category: 'pdf', path: '/pdf/rotate', icon: '🔄', acceptedTypes: ['.pdf', 'application/pdf'] },
+  { id: 'pdf-encrypt', translationKey: 'pdfEncrypt', category: 'pdf', path: '/pdf/encrypt', icon: '🔒', acceptedTypes: ['.pdf', 'application/pdf'] },
+  { id: 'pdf-decrypt', translationKey: 'pdfDecrypt', category: 'pdf', path: '/pdf/decrypt', icon: '🔓', acceptedTypes: ['.pdf', 'application/pdf'] },
   { id: 'image-compress', translationKey: 'imageCompress', category: 'image', path: '/image/compress', icon: '🗜️', acceptedTypes: ['.png', '.jpg', '.jpeg', '.webp', 'image/png', 'image/jpeg', 'image/webp'] },
   { id: 'image-convert', translationKey: 'imageConvert', category: 'image', path: '/image/convert', icon: '🔄', acceptedTypes: ['.png', '.jpg', '.jpeg', '.webp', 'image/png', 'image/jpeg', 'image/webp'] },
   { id: 'image-resize', translationKey: 'imageResize', category: 'image', path: '/image/resize', icon: '📐', acceptedTypes: ['.png', '.jpg', '.jpeg', '.webp', 'image/png', 'image/jpeg', 'image/webp'] },
