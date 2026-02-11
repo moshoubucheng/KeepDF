@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import FileDropZone from '@components/shared/FileDropZone';
+import ProgressBar from '@components/shared/ProgressBar';
 import DownloadButton from '@components/shared/DownloadButton';
 import { useDownload } from '@hooks/useDownload';
 import { decryptPdf } from '@lib/pdf/decryptPdf';
@@ -19,6 +20,7 @@ export default function DecryptPdf({ translations }: DecryptPdfProps) {
 
   const [file, setFile] = useState<File | null>(null);
   const [password, setPassword] = useState('');
+  const [progress, setProgress] = useState(0);
   const [processing, setProcessing] = useState(false);
   const [result, setResult] = useState<Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -42,15 +44,16 @@ export default function DecryptPdf({ translations }: DecryptPdfProps) {
     if (!file || !password) return;
 
     setProcessing(true);
+    setProgress(0);
     setResult(null);
     setError(null);
 
     try {
-      const blob = await decryptPdf(file, password);
+      const blob = await decryptPdf(file, password, setProgress);
       setResult(blob);
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
-      if (msg.toLowerCase().includes('password') || msg.toLowerCase().includes('encrypt')) {
+      if (msg === 'WRONG_PASSWORD') {
         setError(tr?.wrongPassword ?? 'Incorrect password. Please try again.');
       } else {
         setError(msg);
@@ -69,6 +72,7 @@ export default function DecryptPdf({ translations }: DecryptPdfProps) {
   const handleClear = () => {
     setFile(null);
     setPassword('');
+    setProgress(0);
     setProcessing(false);
     setResult(null);
     setError(null);
@@ -127,6 +131,10 @@ export default function DecryptPdf({ translations }: DecryptPdfProps) {
             </button>
           </div>
         </>
+      )}
+
+      {processing && (
+        <ProgressBar progress={progress} label={tr?.decrypting ?? 'Decrypting PDF...'} />
       )}
 
       {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
