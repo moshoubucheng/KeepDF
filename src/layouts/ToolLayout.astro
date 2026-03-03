@@ -1,11 +1,11 @@
 ---
-import BaseLayout from './BaseLayout.astro';
-import PrivacyBadge from '@components/layout/PrivacyBadge.astro';
-import type { ToolCategory } from '@types/tool';
-import type { Locale } from '../i18n/locales';
-import { localePath } from '../i18n/locales';
-import { getCategoryMeta, getToolDefByPath } from '@lib/utils/toolRegistry';
-import { t } from '../i18n/utils';
+import BaseLayout from "./BaseLayout.astro";
+import PrivacyBadge from "@components/layout/PrivacyBadge.astro";
+import type { ToolCategory } from "@/types/tool";
+import type { Locale } from "../i18n/locales";
+import { localePath } from "../i18n/locales";
+import { getCategoryMeta, getToolDefByPath } from "@lib/utils/toolRegistry";
+import { t } from "../i18n/utils";
 
 interface Props {
   title: string;
@@ -18,25 +18,42 @@ interface Props {
 
 const { title, toolName, description, category, jsonLd, lang } = Astro.props;
 const cat = getCategoryMeta(lang, category);
-const homeHref = localePath('/', lang);
+const homeHref = localePath("/", lang);
 const homeLabel = t(lang).breadcrumb.home;
 
-const siteOrigin = 'https://keepdf.com';
+const siteOrigin = "https://keepdf.com";
 
 // Build BreadcrumbList
 const breadcrumbList: Record<string, unknown> = {
-  '@type': 'BreadcrumbList',
+  "@type": "BreadcrumbList",
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: homeLabel, item: `${siteOrigin}${homeHref}` },
-    ...(cat ? [{ '@type': 'ListItem', position: 2, name: cat.name, item: `${siteOrigin}${cat.path}` }] : []),
-    { '@type': 'ListItem', position: 3, name: toolName },
+    {
+      "@type": "ListItem",
+      position: 1,
+      name: homeLabel,
+      item: `${siteOrigin}${homeHref}`,
+    },
+    ...(cat
+      ? [
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: cat.name,
+            item: `${siteOrigin}${cat.path}`,
+          },
+        ]
+      : []),
+    { "@type": "ListItem", position: 3, name: toolName },
   ],
 };
 
 // Auto-compute OG image path
 // Tool pages: /pdf/merge (en), /ja/pdf/merge (ja), /zh/image/compress (zh)
 // OG images: /og/{locale}/{category}-{slug}.png
-const pathParts = Astro.url.pathname.replace(/\/$/, '').split('/').filter(Boolean);
+const pathParts = Astro.url.pathname
+  .replace(/\/$/, "")
+  .split("/")
+  .filter(Boolean);
 const isLocalePrefixed = pathParts.length >= 3;
 const toolCategory = isLocalePrefixed ? pathParts[1] : pathParts[0];
 const toolSlug = isLocalePrefixed ? pathParts[2] : pathParts[1];
@@ -46,36 +63,61 @@ const ogImage = `${siteOrigin}/og/${lang}/${toolCategory}-${toolSlug}.png`;
 const tr = t(lang);
 const toolDef = getToolDefByPath(toolCategory, toolSlug);
 const faqKey = toolDef?.translationKey as keyof typeof tr.faq | undefined;
-const faqItems = faqKey && faqKey !== 'title' ? tr.faq[faqKey] : undefined;
-const faqArray = Array.isArray(faqItems) ? faqItems as { q: string; a: string }[] : [];
+const faqItems = faqKey && faqKey !== "title" ? tr.faq[faqKey] : undefined;
+const faqArray = Array.isArray(faqItems)
+  ? (faqItems as { q: string; a: string }[])
+  : [];
 
 // Build FAQPage schema
-const faqPageSchema = faqArray.length > 0 ? {
-  '@type': 'FAQPage',
-  mainEntity: faqArray.map((item) => ({
-    '@type': 'Question',
-    name: item.q,
-    acceptedAnswer: { '@type': 'Answer', text: item.a },
-  })),
-} : null;
+const faqPageSchema =
+  faqArray.length > 0
+    ? {
+        "@type": "FAQPage",
+        mainEntity: faqArray.map((item) => ({
+          "@type": "Question",
+          name: item.q,
+          acceptedAnswer: { "@type": "Answer", text: item.a },
+        })),
+      }
+    : null;
 
 // Wrap incoming jsonLd (WebApplication) in @graph with BreadcrumbList + FAQPage
 const graphItems = [
-  ...(jsonLd ? [Object.fromEntries(Object.entries(jsonLd).filter(([k]) => k !== '@context'))] : []),
+  ...(jsonLd
+    ? [
+        Object.fromEntries(
+          Object.entries(jsonLd).filter(([k]) => k !== "@context")
+        ),
+      ]
+    : []),
   breadcrumbList,
   ...(faqPageSchema ? [faqPageSchema] : []),
 ];
 
-const enhancedJsonLd = graphItems.length > 0 ? {
-  '@context': 'https://schema.org',
-  '@graph': graphItems,
-} : undefined;
+const enhancedJsonLd =
+  graphItems.length > 0
+    ? {
+        "@context": "https://schema.org",
+        "@graph": graphItems,
+      }
+    : undefined;
 ---
 
-<BaseLayout title={title} description={description} lang={lang} ogImage={ogImage}>
-  {enhancedJsonLd && (
-    <script type="application/ld+json" set:html={JSON.stringify(enhancedJsonLd)} slot="head" />
-  )}
+<BaseLayout
+  title={title}
+  description={description}
+  lang={lang}
+  ogImage={ogImage}
+>
+  {
+    enhancedJsonLd && (
+      <script
+        type="application/ld+json"
+        set:html={JSON.stringify(enhancedJsonLd)}
+        slot="head"
+      />
+    )
+  }
 
   <div class="mx-auto max-w-4xl px-4 py-8">
     <!-- Breadcrumb -->
@@ -83,18 +125,26 @@ const enhancedJsonLd = graphItems.length > 0 ? {
       <ol class="flex items-center gap-1.5">
         <li><a href={homeHref} class="hover:text-brand-600">{homeLabel}</a></li>
         <li>/</li>
-        {cat && (
-          <>
-            <li><a href={cat.path} class="hover:text-brand-600">{cat.name}</a></li>
-            <li>/</li>
-          </>
-        )}
+        {
+          cat && (
+            <>
+              <li>
+                <a href={cat.path} class="hover:text-brand-600">
+                  {cat.name}
+                </a>
+              </li>
+              <li>/</li>
+            </>
+          )
+        }
         <li class="text-fg font-medium">{toolName}</li>
       </ol>
     </nav>
 
     <!-- Tool header -->
-    <div class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+    <div
+      class="mb-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+    >
       <h1 class="text-2xl font-bold text-fg">{toolName}</h1>
       <PrivacyBadge lang={lang} />
     </div>
@@ -103,20 +153,22 @@ const enhancedJsonLd = graphItems.length > 0 ? {
     <slot />
 
     <!-- FAQ section -->
-    {faqArray.length > 0 && (
-      <section class="mt-12 border-t border-border pt-8">
-        <h2 class="mb-4 text-xl font-semibold text-fg">{tr.faq.title}</h2>
-        <div class="space-y-3">
-          {faqArray.map((item) => (
-            <details class="group rounded-lg border border-border bg-surface">
-              <summary class="cursor-pointer select-none px-4 py-3 font-medium text-fg hover:bg-surface-hover">
-                {item.q}
-              </summary>
-              <p class="px-4 pb-4 text-fg-muted">{item.a}</p>
-            </details>
-          ))}
-        </div>
-      </section>
-    )}
+    {
+      faqArray.length > 0 && (
+        <section class="mt-12 border-t border-border pt-8">
+          <h2 class="mb-4 text-xl font-semibold text-fg">{tr.faq.title}</h2>
+          <div class="space-y-3">
+            {faqArray.map((item) => (
+              <details class="group rounded-lg border border-border bg-surface">
+                <summary class="cursor-pointer select-none px-4 py-3 font-medium text-fg hover:bg-surface-hover">
+                  {item.q}
+                </summary>
+                <p class="px-4 pb-4 text-fg-muted">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )
+    }
   </div>
 </BaseLayout>

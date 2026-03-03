@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { ProcessingFile } from '@types/file';
+import type { ProcessingFile } from '@/types/file';
 import { formatFileSize } from '@lib/utils/fileHelpers';
 
 export interface FileListTranslations {
@@ -54,11 +54,9 @@ export default function FileList({ files, onRemove, onMove, showResult = false, 
           onDragOver={(e) => handleDragOver(e, i)}
           onDragEnd={handleDragEnd}
           onDrop={handleDrop}
-          className={`flex items-center gap-3 px-4 py-3 ${
-            f.status === 'processing' ? 'animate-subtle-pulse' : ''
-          } ${dragIndex === i ? 'opacity-50' : ''} ${
-            dragOverIndex === i && dragIndex !== i ? 'border-t-2 border-brand-500' : ''
-          }`}
+          className={`flex items-center gap-3 px-4 py-3 ${f.status === 'processing' ? 'animate-subtle-pulse' : ''
+            } ${dragIndex === i ? 'opacity-50' : ''} ${dragOverIndex === i && dragIndex !== i ? 'border-t-2 border-brand-500' : ''
+            }`}
         >
           {onMove && (
             <>

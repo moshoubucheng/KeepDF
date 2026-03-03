@@ -7,7 +7,7 @@ import { useFileUpload } from '@hooks/useFileUpload';
 import { useDownload } from '@hooks/useDownload';
 import { compressPdf } from '@lib/pdf/compress';
 import { formatFileSize } from '@lib/utils/fileHelpers';
-import type { ProcessingResult } from '@types/file';
+import type { ProcessingResult } from '@/types/file';
 import { Button } from '@/components/ui/button';
 import type { Translations } from '@/i18n/translations';
 

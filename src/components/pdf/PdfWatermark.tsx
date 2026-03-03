@@ -83,7 +83,7 @@ export default function PdfWatermark({ translations }: PdfWatermarkProps) {
 
   const handleDownload = () => {
     if (!result) return;
-    const blob = new Blob([result], { type: 'application/pdf' });
+    const blob = new Blob([result as BlobPart], { type: 'application/pdf' });
     download(blob, translations?.pdfWatermark.resultName ?? 'watermarked.pdf');
   };
 
@@ -219,14 +219,14 @@ export default function PdfWatermark({ translations }: PdfWatermarkProps) {
           </div>
 
           <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-          <Button
-            onClick={handleApply}
-            disabled={processing || !text.trim()}
-          >
-            {processing
-              ? (translations?.pdfWatermark.applying ?? 'Applying...')
-              : (translations?.pdfWatermark.applyBtn ?? 'Apply Watermark')}
-          </Button>
+            <Button
+              onClick={handleApply}
+              disabled={processing || !text.trim()}
+            >
+              {processing
+                ? (translations?.pdfWatermark.applying ?? 'Applying...')
+                : (translations?.pdfWatermark.applyBtn ?? 'Apply Watermark')}
+            </Button>
           </div>
         </>
       )}

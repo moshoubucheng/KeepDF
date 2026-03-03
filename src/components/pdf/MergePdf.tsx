@@ -48,7 +48,7 @@ export default function MergePdf({ translations }: MergePdfProps) {
 
   const handleDownload = () => {
     if (!result) return;
-    const blob = new Blob([result], { type: 'application/pdf' });
+    const blob = new Blob([result as BlobPart], { type: 'application/pdf' });
     download(blob, translations?.pdfMerge.resultName ?? 'merged.pdf');
   };
 

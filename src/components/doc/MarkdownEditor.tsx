@@ -110,7 +110,7 @@ export default function MarkdownEditor({ translations }: MarkdownEditorProps) {
     setContent('');
   }, [content]);
 
-  const viewModeButtons: { mode: ViewMode; label: string; icon: JSX.Element }[] = [
+  const viewModeButtons: { mode: ViewMode; label: string; icon: React.JSX.Element }[] = [
     {
       mode: 'edit',
       label: translations?.mdEditor.edit ?? 'Edit',
@@ -154,11 +154,10 @@ export default function MarkdownEditor({ translations }: MarkdownEditorProps) {
             <button
               key={mode}
               onClick={() => setViewMode(mode)}
-              className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
-                viewMode === mode
+              className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${viewMode === mode
                   ? 'bg-surface text-brand-700 shadow-sm'
                   : 'text-fg-muted hover:text-fg-sec'
-              }`}
+                }`}
             >
               {icon}
               {label}
@@ -205,11 +204,10 @@ export default function MarkdownEditor({ translations }: MarkdownEditorProps) {
 
       {/* Editor + Preview area */}
       <div
-        className={`grid min-h-[500px] gap-4 ${
-          viewMode === 'split'
+        className={`grid min-h-[500px] gap-4 ${viewMode === 'split'
             ? 'grid-cols-1 md:grid-cols-2'
             : 'grid-cols-1'
-        }`}
+          }`}
       >
         {/* Editor pane */}
         {showEditor && (

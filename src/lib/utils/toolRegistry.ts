@@ -1,4 +1,4 @@
-import type { ToolCategory } from '@types/tool';
+import type { ToolCategory } from '@/types/tool';
 import type { Locale } from '../../i18n/locales';
 import { localePath } from '../../i18n/locales';
 import { t } from '../../i18n/utils';

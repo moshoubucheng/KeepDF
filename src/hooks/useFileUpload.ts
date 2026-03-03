@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import type { ProcessingFile } from '@types/file';
+import type { ProcessingFile } from '@/types/file';
 import { generateId, validateFileType } from '@lib/utils/fileHelpers';
 
 export function useFileUpload(acceptedTypes: string[]) {
