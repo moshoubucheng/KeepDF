@@ -67,8 +67,8 @@ export async function compressPdf(
       doc.addPage([pageW, pageH], viewport.width > viewport.height ? 'landscape' : 'portrait');
     } else {
       // Resize first page if dimensions differ from init
-      doc.internal.pageSize.setWidth(pageW);
-      doc.internal.pageSize.setHeight(pageH);
+      (doc.internal.pageSize as any).width = pageW;
+      (doc.internal.pageSize as any).height = pageH;
     }
 
     doc.addImage(imgData, 'JPEG', 0, 0, pageW, pageH, undefined, 'FAST');
