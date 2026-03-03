@@ -1,0 +1,187 @@
+---
+import ToolLayout from "@layouts/ToolLayout.astro";
+import { toolDefs } from "@lib/utils/toolRegistry";
+import type { Locale } from "../../../i18n/locales";
+import { locales, defaultLocale } from "../../../i18n/locales";
+import { t } from "../../../i18n/utils";
+
+/* ── Component imports ── */
+import MergePdf from "@components/pdf/MergePdf";
+import SplitPdf from "@components/pdf/SplitPdf";
+import CompressPdf from "@components/pdf/CompressPdf";
+import PdfToImage from "@components/pdf/PdfToImage";
+import PdfWatermark from "@components/pdf/PdfWatermark";
+import PdfToWord from "@components/pdf/PdfToWord";
+import RotatePdf from "@components/pdf/RotatePdf";
+import EncryptPdf from "@components/pdf/EncryptPdf";
+import DecryptPdf from "@components/pdf/DecryptPdf";
+import CompressImage from "@components/image/CompressImage";
+import ConvertImage from "@components/image/ConvertImage";
+import ResizeImage from "@components/image/ResizeImage";
+import CropImage from "@components/image/CropImage";
+import StitchImage from "@components/image/StitchImage";
+import HeicConvert from "@components/image/HeicConvert";
+import ImageToPdf from "@components/image/ImageToPdf";
+import MarkdownEditor from "@components/doc/MarkdownEditor";
+import MdToPdf from "@components/doc/MdToPdf";
+import WordCount from "@components/doc/WordCount";
+import WordToPdf from "@components/doc/WordToPdf";
+
+export function getStaticPaths() {
+    const paths: {
+        params: { lang: string; category: string; tool: string };
+    }[] = [];
+    for (const lang of locales) {
+        if (lang === defaultLocale) continue;
+        for (const def of toolDefs) {
+            const segments = def.path.split("/").filter(Boolean);
+            paths.push({
+                params: { lang, category: segments[0], tool: segments[1] },
+            });
+        }
+    }
+    return paths;
+}
+
+const lang = Astro.params.lang as Locale;
+const category = Astro.params.category!;
+const toolSlug = Astro.params.tool!;
+const tr = t(lang);
+
+const toolDef = toolDefs.find((d) => d.path === `/${category}/${toolSlug}`)!;
+const toolKey = toolDef.translationKey as keyof typeof tr.tools;
+const toolTr = tr.tools[toolKey];
+const title = `${toolTr.name} - ${tr.site.name}`;
+const description = toolTr.description;
+
+const uiStrings: Record<string, any> = {
+    common: tr.common,
+    [toolDef.translationKey]: (tr as any)[toolDef.translationKey],
+};
+
+const siteOrigin = "https://keepdf.com";
+const pageUrl = `${siteOrigin}/${lang}/${category}/${toolSlug}`;
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: toolTr.name,
+    description: toolTr.description,
+    url: pageUrl,
+    applicationCategory: "UtilityApplication",
+    operatingSystem: "Any",
+    inLanguage: lang,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+};
+
+const tk = toolDef.translationKey;
+---
+
+<ToolLayout
+    title={title}
+    toolName={toolTr.name}
+    description={description}
+    category={toolDef.category}
+    jsonLd={jsonLd}
+    lang={lang}
+>
+    {
+        tk === "pdfMerge" && (
+            <MergePdf client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "pdfSplit" && (
+            <SplitPdf client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "pdfCompress" && (
+            <CompressPdf client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "pdfToImage" && (
+            <PdfToImage client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "pdfWatermark" && (
+            <PdfWatermark client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "pdfToWord" && (
+            <PdfToWord client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "pdfRotate" && (
+            <RotatePdf client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "pdfEncrypt" && (
+            <EncryptPdf client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "pdfDecrypt" && (
+            <DecryptPdf client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "imageCompress" && (
+            <CompressImage client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "imageConvert" && (
+            <ConvertImage client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "imageResize" && (
+            <ResizeImage client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "imageCrop" && (
+            <CropImage client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "imageStitch" && (
+            <StitchImage client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "heicConvert" && (
+            <HeicConvert client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "imageToPdf" && (
+            <ImageToPdf client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "mdEditor" && (
+            <MarkdownEditor client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "mdToPdf" && (
+            <MdToPdf client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "wordCount" && (
+            <WordCount client:only="react" translations={uiStrings} />
+        )
+    }
+    {
+        tk === "wordToPdf" && (
+            <WordToPdf client:only="react" translations={uiStrings} />
+        )
+    }
+</ToolLayout>

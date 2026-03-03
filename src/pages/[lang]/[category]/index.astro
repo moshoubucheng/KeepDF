@@ -1,0 +1,82 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import ToolCard from "@components/shared/ToolCard";
+import {
+    getToolsByCategory,
+    getCategoryMeta,
+    categoryDefs,
+} from "@lib/utils/toolRegistry";
+import type { ToolCategory } from "@types/tool";
+import type { Locale } from "../../../i18n/locales";
+import { locales, defaultLocale } from "../../../i18n/locales";
+import { t } from "../../../i18n/utils";
+
+export function getStaticPaths() {
+    const paths: { params: { lang: string; category: string } }[] = [];
+    for (const lang of locales) {
+        if (lang === defaultLocale) continue;
+        for (const cat of categoryDefs) {
+            paths.push({ params: { lang, category: cat.id } });
+        }
+    }
+    return paths;
+}
+
+const lang = Astro.params.lang as Locale;
+const categoryId = Astro.params.category as ToolCategory;
+const tr = t(lang);
+const category = getCategoryMeta(lang, categoryId)!;
+const tools = getToolsByCategory(lang, categoryId);
+const title = `${category.name} - ${tr.site.name}`;
+
+const siteOrigin = "https://keepdf.com";
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: category.name,
+    description: category.description,
+    url: `${siteOrigin}${category.path}`,
+    inLanguage: lang,
+    mainEntity: {
+        "@type": "ItemList",
+        itemListElement: tools.map((tool, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            url: `${siteOrigin}${tool.path}`,
+            name: tool.name,
+        })),
+    },
+};
+---
+
+<BaseLayout
+    title={title}
+    description={category.description}
+    lang={lang}
+    ogImage={`https://keepdf.com/og/${lang}/${categoryId}.png`}
+>
+    <script
+        type="application/ld+json"
+        set:html={JSON.stringify(jsonLd)}
+        slot="head"
+    ></script>
+    <div class="mx-auto max-w-4xl px-4 py-8">
+        <h1 class="text-2xl font-bold text-fg">{category.name}</h1>
+        <p class="mt-2 text-fg-sec">
+            {category.description}
+        </p>
+
+        <div class="mt-8 grid grid-cols-2 gap-4 lg:grid-cols-3">
+            {
+                tools.map((tool) => (
+                    <ToolCard
+                        name={tool.name}
+                        description={tool.description}
+                        icon={tool.icon}
+                        href={tool.path}
+                    />
+                ))
+            }
+        </div>
+    </div>
+</BaseLayout>

@@ -1,0 +1,165 @@
+---
+import BaseLayout from "@layouts/BaseLayout.astro";
+import PrivacyBadge from "@components/layout/PrivacyBadge.astro";
+import {
+    getLocalizedCategories,
+    getToolsByCategory,
+} from "@lib/utils/toolRegistry";
+import type { Locale } from "../../i18n/locales";
+import { locales, defaultLocale } from "../../i18n/locales";
+import { t } from "../../i18n/utils";
+
+export function getStaticPaths() {
+    return locales
+        .filter((l) => l !== defaultLocale)
+        .map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Locale;
+const tr = t(lang);
+const localizedCategories = getLocalizedCategories(lang);
+
+const siteUrl = `https://keepdf.com/${lang}`;
+const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "WebSite",
+            name: "KeepDF",
+            url: siteUrl,
+            description: tr.site.description,
+            inLanguage: lang,
+        },
+        {
+            "@type": "Organization",
+            name: "KeepDF",
+            url: "https://keepdf.com",
+            logo: "https://keepdf.com/icon-512.png",
+        },
+    ],
+};
+---
+
+<BaseLayout
+    title={`${tr.site.name} - ${tr.site.tagline}`}
+    description={tr.site.description}
+    lang={lang}
+    ogImage={`https://keepdf.com/og/${lang}/home.png`}
+>
+    <script
+        type="application/ld+json"
+        set:html={JSON.stringify(jsonLd)}
+        slot="head"
+    ></script>
+    <!-- Hero -->
+    <section
+        class="bg-[linear-gradient(to_bottom,#eff6ff,#ffffff)] dark:bg-[radial-gradient(ellipse_at_top,#1e3a8a_0%,#111827_70%)] py-16 text-center"
+    >
+        <div class="mx-auto max-w-3xl px-4">
+            <h1 class="text-4xl font-bold tracking-tight text-fg sm:text-5xl">
+                {tr.hero.title}
+                <span class="text-brand-600">{tr.hero.highlight}</span>
+            </h1>
+            <p class="mt-4 text-lg text-fg-sec">
+                {tr.hero.subtitle}
+            </p>
+            <div class="mt-6 flex justify-center">
+                <PrivacyBadge lang={lang} />
+            </div>
+        </div>
+    </section>
+
+    <!-- Tool categories -->
+    <section class="py-12">
+        <div class="mx-auto max-w-6xl px-4">
+            <div class="grid gap-8 md:grid-cols-3">
+                {
+                    localizedCategories.map((cat) => {
+                        const catTools = getToolsByCategory(lang, cat.id);
+                        return (
+                            <div class="rounded-xl border border-edge bg-surface p-6">
+                                <div class="mb-4">
+                                    <span class="text-3xl">{cat.icon}</span>
+                                    <h2 class="mt-2 text-xl font-bold text-fg">
+                                        <a
+                                            href={cat.path}
+                                            class="hover:text-brand-600"
+                                        >
+                                            {cat.name}
+                                        </a>
+                                    </h2>
+                                    <p class="mt-1 text-sm text-fg-muted">
+                                        {cat.description}
+                                    </p>
+                                </div>
+                                <ul class="grid grid-cols-2 gap-1">
+                                    {catTools.map((tool) => (
+                                        <li>
+                                            <a
+                                                href={tool.path}
+                                                class="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-fg-sec transition-colors hover:bg-brand-50 dark:hover:bg-brand-950 hover:text-brand-600"
+                                            >
+                                                <span>{tool.icon}</span>
+                                                {tool.name}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        );
+                    })
+                }
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="border-t border-edge bg-page py-12">
+        <div class="mx-auto max-w-4xl px-4 text-center">
+            <h2 class="text-2xl font-bold text-fg">{tr.howItWorks.title}</h2>
+            <p class="mt-2 text-fg-sec">{tr.howItWorks.subtitle}</p>
+
+            <div class="mt-10 grid gap-8 sm:grid-cols-3">
+                <div>
+                    <div
+                        class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-100 text-xl font-bold text-brand-700"
+                    >
+                        1
+                    </div>
+                    <h3 class="mt-4 font-semibold text-fg">
+                        {tr.howItWorks.step1title}
+                    </h3>
+                    <p class="mt-1 text-sm text-fg-muted">
+                        {tr.howItWorks.step1desc}
+                    </p>
+                </div>
+                <div>
+                    <div
+                        class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-100 text-xl font-bold text-brand-700"
+                    >
+                        2
+                    </div>
+                    <h3 class="mt-4 font-semibold text-fg">
+                        {tr.howItWorks.step2title}
+                    </h3>
+                    <p class="mt-1 text-sm text-fg-muted">
+                        {tr.howItWorks.step2desc}
+                    </p>
+                </div>
+                <div>
+                    <div
+                        class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-brand-100 text-xl font-bold text-brand-700"
+                    >
+                        3
+                    </div>
+                    <h3 class="mt-4 font-semibold text-fg">
+                        {tr.howItWorks.step3title}
+                    </h3>
+                    <p class="mt-1 text-sm text-fg-muted">
+                        {tr.howItWorks.step3desc}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+</BaseLayout>

@@ -48,7 +48,7 @@ export default function CompressPdf({ translations }: CompressPdfProps) {
         });
 
         const result: ProcessingResult = {
-          blob: new Blob([compressed], { type: 'application/pdf' }),
+          blob: new Blob([compressed as BlobPart], { type: 'application/pdf' }),
           filename: pf.name.replace(/\.pdf$/i, '_compressed.pdf'),
           originalSize: pf.size,
           resultSize: compressed.byteLength,
@@ -93,16 +93,16 @@ export default function CompressPdf({ translations }: CompressPdfProps) {
 
       {pendingCount > 0 && (
         <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-        <Button
-          onClick={handleCompress}
-          disabled={processing}
-        >
-          {processing
-            ? (translations?.pdfCompress.compressing ?? `Compressing (${currentIndex + 1}/${files.filter((f) => f.status !== 'done').length})...`)
-            : (pendingCount === 1
-              ? (translations?.pdfCompress.compressBtn ?? 'Compress')
-              : (translations?.pdfCompress.compressAll ?? `Compress ${pendingCount} Files`))}
-        </Button>
+          <Button
+            onClick={handleCompress}
+            disabled={processing}
+          >
+            {processing
+              ? (translations?.pdfCompress.compressing ?? `Compressing (${currentIndex + 1}/${files.filter((f) => f.status !== 'done').length})...`)
+              : (pendingCount === 1
+                ? (translations?.pdfCompress.compressBtn ?? 'Compress')
+                : (translations?.pdfCompress.compressAll ?? `Compress ${pendingCount} Files`))}
+          </Button>
         </div>
       )}
 
@@ -113,7 +113,7 @@ export default function CompressPdf({ translations }: CompressPdfProps) {
       {/* Info note */}
       <div className="rounded-lg border border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950 p-4">
         <p className="text-sm text-blue-800 dark:text-blue-200">
-          {translations?.pdfCompress.limitation ?? 'Note: Browser-based compression optimizes PDF structure and removes metadata, but cannot recompress embedded images. For maximum compression, consider using a desktop tool for image-heavy PDFs.'}
+          {translations?.pdfCompress.limitation ?? 'Images in the PDF will be downscaled and recompressed for maximum size reduction.'}
         </p>
       </div>
 
