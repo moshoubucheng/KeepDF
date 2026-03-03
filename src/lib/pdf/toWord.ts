@@ -135,7 +135,7 @@ export async function pdfToWord(
     canvas.width = viewport.width;
     canvas.height = viewport.height;
     const ctx = canvas.getContext('2d')!;
-    await page.render({ canvasContext: ctx, viewport }).promise;
+    await page.render({ canvasContext: ctx, viewport } as any).promise;
 
     const pageHeight = viewport.height;
 

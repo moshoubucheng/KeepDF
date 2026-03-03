@@ -93,13 +93,13 @@ export default function SplitPdf({ translations }: SplitPdfProps) {
   };
 
   const handleDownloadSingle = (item: { filename: string; data: Uint8Array }) => {
-    const blob = new Blob([item.data], { type: 'application/pdf' });
+    const blob = new Blob([item.data as BlobPart], { type: 'application/pdf' });
     download(blob, item.filename);
   };
 
   const handleDownloadAll = () => {
     const items = results.map((r) => ({
-      blob: new Blob([r.data], { type: 'application/pdf' }),
+      blob: new Blob([r.data as BlobPart], { type: 'application/pdf' }),
       filename: r.filename,
     }));
     downloadAll(items);
@@ -196,14 +196,14 @@ export default function SplitPdf({ translations }: SplitPdfProps) {
 
           {/* Split button */}
           <div className="sticky bottom-4 z-40 rounded-xl bg-surface/80 p-3 backdrop-blur-sm sm:static sm:bg-transparent sm:p-0 sm:backdrop-blur-none">
-          <Button
-            onClick={handleSplit}
-            disabled={processing || !canSplit}
-          >
-            {processing
-              ? (translations?.pdfSplit.splitting ?? 'Splitting...')
-              : (translations?.pdfSplit.splitBtn ?? 'Split PDF')}
-          </Button>
+            <Button
+              onClick={handleSplit}
+              disabled={processing || !canSplit}
+            >
+              {processing
+                ? (translations?.pdfSplit.splitting ?? 'Splitting...')
+                : (translations?.pdfSplit.splitBtn ?? 'Split PDF')}
+            </Button>
           </div>
         </>
       )}

@@ -41,5 +41,5 @@ export async function rotatePdf(
   }
 
   const pdfBytes = await pdfDoc.save();
-  return new Blob([pdfBytes], { type: 'application/pdf' });
+  return new Blob([pdfBytes as BlobPart], { type: 'application/pdf' });
 }
